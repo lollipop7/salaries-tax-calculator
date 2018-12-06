@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { NavBar, Icon, Flex, List, WingBlank, Card, InputItem, Button, Checkbox } from 'antd-mobile';
+import { NavBar, Icon, Flex, List, WingBlank, Card, InputItem, Button, Checkbox, Piker } from 'antd-mobile';
 import {createForm} from 'rc-form';
 import './style.scss'; 
 
@@ -37,7 +37,7 @@ class Main extends Component {
           </div>
         </Flex>
         <WingBlank size="lg">
-          <Card className='s-card'>
+          <Card className='s-card custom-list'>
             <List>
               <Item className='st-title'>
                 税前工资（月薪）
@@ -54,6 +54,7 @@ class Main extends Component {
                     return v;
                   },
                 })}
+                className='mid-list-item'
                 placeholder="10000.00"
                 type='money'
                 onVirtualKeyboardConfirm={v => console.log('onVirtualKeyboardConfirm:', v)}
@@ -67,6 +68,7 @@ class Main extends Component {
                 税后工资（2018.10.01新税法）
               </Item>
               <Item 
+                className='mid-list-item'
                 extra={"计算后的工资"}
               >￥</Item>
             </List>
@@ -76,24 +78,45 @@ class Main extends Component {
                 type="primary"  inline>计算</Button>
             </List>
           </Card>
-          <div className="deduct-list">
+          <div className="deduct-list custom-list">
             <List>
               <Item className='st-title'>
                 社保基数
               </Item>
               <Item
                 extra={
-                  <CheckboxItem key="social_base" className="st-checkbox">
+                  <CheckboxItem key="social_base" className="rt-checkbox">
+                    自定义
+                  </CheckboxItem>
+                }
+                className='mid-list-item'
+              >
+                社保初始数值
+              </Item> 
+            </List>
+            <List>
+              <Item className='st-title'>
+                社保基数
+              </Item>
+              <Item
+                className='mid-list-item'
+                extra={
+                  <CheckboxItem key="housing_fund" className="rt-checkbox">
                     自定义
                   </CheckboxItem>
               }
               >
-                
-                社保/公积金初始数值显示当前城市的下限值
+                公积金初始数值
               </Item> 
             </List>
-            
-               
+            <List>
+              <Piker>
+                <CheckboxItem key="smt_housing_fund">
+                  汇缴补充公积金
+                </CheckboxItem>
+              </Piker>
+                
+            </List>
           </div>
         </WingBlank>
       </div>

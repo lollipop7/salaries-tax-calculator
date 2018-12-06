@@ -19,20 +19,64 @@
   border: 1PX solid #3E85FF;
 }
 
+
+.am-list .am-list-item.am-checkbox-item .am-list-thumb {
+  width: 18px;
+  height: 18px; 
+  &:first-child {
+    margin-right: 20px;
+  }
+} 
+.am-list .am-list-item.am-checkbox-item .am-list-thumb .am-checkbox-inner {
+  top: 14px;
+}
 .am-checkbox-inner {
   border-radius: 0;
   width: 18px;
   height: 18px;
   &:after {
-    top: 1px;
+    top: 0;
     right: 5px;
   }
 }
 
-.am-list .am-list-item.am-checkbox-item .am-list-thumb {
-  width: 18px;
-  height: 18px; 
-} 
+// 通用样式
+.mid-list-item {
+  &>.am-list-line {
+    padding-right: 0;
+    // 中横线
+    margin-right: 15px;
+  }
+  .am-list-line:after {
+    content: '';
+    position: absolute;
+    background-color: #ddd;
+    display: block;
+    z-index: 1;
+    top: auto;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1PX; 
+    -webkit-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+  }
+}
+
+.custom-list {
+  .am-list-body div:not(:last-child) .am-list-line::after {
+    height: 0px !important;
+  }
+  .am-list-body::before {
+    height: 0px !important;
+  }
+  .am-list-body::after {
+    height: 0px !important;
+  }
+}
 
 .nav-bar {
   color: #a0a0a0;
@@ -42,39 +86,6 @@
   padding: 1px;
   box-shadow: 0px -1px 2px 0px rgba(0, 0, 0, 0.1),
               0px 1px 0px 0px rgba(0, 0, 0, 0.1);
-  
-  .am-list-body::before {
-    height: 0px !important;
-  }
-  .am-list-body::after {
-    height: 0px !important;
-  }
-  .am-list-item {
-    .am-list-line {
-      padding-right: 0;
-      margin-right: 15px;
-    }
-    .am-list-line:after {
-      content: '';
-      position: absolute;
-      background-color: #ddd;
-      display: block;
-      z-index: 1;
-      top: auto;
-      right: auto;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 1PX; 
-      -webkit-transform-origin: 50% 100%;
-      transform-origin: 50% 100%;
-      -webkit-transform: scaleY(0.5);
-      transform: scaleY(0.5);
-    }
-  }
-  .am-list-body div:not(:last-child) .am-list-line::after {
-    height: 0px !important;
-  }
   
   .am-list:last-child {
     text-align: right;
@@ -87,6 +98,8 @@
   }
 }
 
+
+
 .st-title {
   min-height: 20px;
   .am-list-line {
@@ -98,26 +111,20 @@
   }
 }
 
-  
-.deduct-list {
-  top: 2px;
-  .am-list-item .am-list-line .am-list-extra {
-    flex-basis: 30%;
-  }
-  .am-list .am-list-item.am-checkbox-item .am-list-thumb .am-checkbox-inner {
-    left: auto;
-    top: 14px;
-    right: 50px;
-  }
-  .am-list-body div:not(:last-child) .am-list-line::after {
-    height: 0 !important;
+.rt-checkbox {
+  .am-list-thumb .am-checkbox-inner {
+    left: 36px !important;
   }
 }
-.st-checkbox {
-  .am-list-line {
-    padding-right: 0;
-    .am-list-content {
+.deduct-list {
+  top: 2px;
+  .am-list-extra {
+    .am-list-item .am-list-line {
+      padding-right: 0;
+    }
+    .am-list-item .am-list-line .am-list-content {
       text-align: right;
     }
   }
+  
 }
