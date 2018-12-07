@@ -1,3 +1,5 @@
+@import '../../scss/mixin.scss';
+@import '../../scss/variable.scss';
 .am-list-item {
   .am-list-line .am-list-content {
     font-size: 14px;
@@ -48,21 +50,7 @@
     margin-right: 15px;
   }
   .am-list-line:after {
-    content: '';
-    position: absolute;
-    background-color: #ddd;
-    display: block;
-    z-index: 1;
-    top: auto;
-    right: auto;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 1PX; 
-    -webkit-transform-origin: 50% 100%;
-    transform-origin: 50% 100%;
-    -webkit-transform: scaleY(0.5);
-    transform: scaleY(0.5);
+    @include border-bottom;
   }
 }
 
@@ -127,4 +115,20 @@
     }
   }
   
+}
+.lt-checkbox .am-list-line .am-list-extra {
+  position: relative;
+  &:after {
+    @include border-bottom;
+  }
+}
+.add-deduct {
+  padding: 20px 0 15px;
+  .am-button-inline {
+    padding: 0 18px;
+  }
+  .am-flexbox-item {
+    margin-top: 5px;
+    color: $theme-color;
+  }
 }

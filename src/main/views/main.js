@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { NavBar, Icon, Flex, List, WingBlank, Card, InputItem, Button, Checkbox, Piker } from 'antd-mobile';
+import { NavBar, Icon, Flex, List, WingBlank, Card, InputItem, Button, Checkbox, Picker } from 'antd-mobile';
 import {createForm} from 'rc-form';
 import './style.scss'; 
 
@@ -15,7 +15,48 @@ if (isIPhone) {
   };
 }
 
+const smts = [
+  {
+    label: '1%',
+    value: '1%'
+  },
+  {
+    label: '2%',
+    value: '2%'
+  },
+  {
+    label: '3%',
+    value: '3%'
+  },
+  {
+    label: '4%',
+    value: '4%'
+  },
+  {
+    label: '5%',
+    value: '5%'
+  },
+  {
+    label: '6%',
+    value: '6%'
+  },
+  {
+    label: '7%',
+    value: '7%'
+  },
+  {
+    label: '8%',
+    value: '8%'
+  }
+]
+
 class Main extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      smtValue: ['8%']
+    }
+  }
   render() {
     const { getFieldProps } = this.props.form;
     // console.log(getFieldProps)
@@ -110,11 +151,31 @@ class Main extends Component {
               </Item> 
             </List>
             <List>
-              <Piker>
-                <CheckboxItem key="smt_housing_fund">
+              <Picker
+                title="补充公积金比例"
+                data={smts}
+                cols={1}
+                value={this.state.smtValue}
+                onChange={v=>console.log(v)}
+              >
+                <CheckboxItem 
+                  className="lt-checkbox"
+                  key="smt_housing_fund"
+                  arrow="down"
+                >
                   汇缴补充公积金
                 </CheckboxItem>
-              </Piker>
+              </Picker>
+              <Flex
+                direction="column"
+                className="add-deduct"
+              >
+                <Button 
+                  type="primary"
+                  inline={true}
+                >添加抵扣项&nbsp;+</Button>
+                <Flex.Item>已添加3个项目</Flex.Item>
+              </Flex>
                 
             </List>
           </div>
