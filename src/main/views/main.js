@@ -174,7 +174,7 @@ class Main extends Component {
                   type="primary"
                   inline={true}
                 >添加抵扣项&nbsp;+</Button>
-                <Flex.Item>已添加3个项目</Flex.Item>
+                <Flex.Item>已添加{0}个项目</Flex.Item>
               </Flex>
                 
             </List>
