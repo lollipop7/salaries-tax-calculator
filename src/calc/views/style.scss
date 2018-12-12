@@ -1,6 +1,13 @@
 .calc-list {
   background: #fff;
 }
-.pie-chart {
-  height: 330px !important;
+.salary-pie {
+  .pie-chart {
+    height: 330px !important;
+  }
+}
+.cost-pie {
+  .pie-chart {
+    height: 600px !important;
+  }
 }

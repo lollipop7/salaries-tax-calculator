@@ -1,4 +1,4 @@
-// 指定图表的配置项和数据
+// 工资构成
 /**
  * #5fc3be 税后工资 81.4%
  * #3f4549 养老保险 8.0%
@@ -13,22 +13,9 @@ let arrLt = ['81.4%', '2.0%', '7.0%', '1.2%'],
 arrRt = ['8.0%', '0.5%', '0.0%'],
 salary = '¥10000';
 export const salaryPieOption = {
-  graphic: {
-    type: 'text',
-    zlevel: 200,
-    z: 2,
-    left: 'center',
-    top: 'center',
-    style: {
-      text: salary,
-      x: 100,
-      y: 100,
-      fill: '#000'
-    }
-  },
   tooltip: { // 提示框组件 
     trigger: 'item', // 触发类型
-    formatter: "{a} <br/>{b}: {c} ({d}%)", // 提示框浮层内容格式器
+    formatter: "{b}: ({c}%)", // 提示框浮层内容格式器
     confine: true // 是否将 tooltip 框限制在图表的区域内。
   },
   color: ['#5fc3be', '#3f4549', '#d1d969', '#fb9da2', '#4799cd', '#ffe200', '#ffbb7c'],

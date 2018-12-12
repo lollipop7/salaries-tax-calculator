@@ -26,11 +26,7 @@ export  class Chart extends PureComponent {
   }
   
   componentDidUpdate() {
-    this.chartInstance.setOption({
-      series: [{
-        name: '¥10000'
-      }]
-    })
+    this.initPie()
   }
   
   render() {

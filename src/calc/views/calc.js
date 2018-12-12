@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {List, WingBlank, WhiteSpace, Flex, Card} from 'antd-mobile';
 import echarts from 'echarts/lib/echarts'; 
-import {Chart as SalaryPie} from './salary-pie';
-import {salaryPieOption} from '../optionConfig/options.js';
+import {Chart as PieChart} from './pie-chart';
+import {salaryPieOption} from '../optionConfig/salaryPieOptions.js';
+import {costPieOption} from '../optionConfig/costPieOptions.js';
 import './style.scss'; 
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -97,8 +98,19 @@ class Calc extends Component {
             <Card.Header
               title="工资构成"
             />
-            <Card.Body className='pie-wrap'>
-              <SalaryPie option={salaryPieOption}></SalaryPie>
+            <Card.Body className='salary-pie'>
+              <PieChart option={salaryPieOption}></PieChart>
+            </Card.Body>
+          </Card>
+        </WingBlank>
+        <WhiteSpace size="lg"></WhiteSpace>
+        <WingBlank size="lg">
+          <Card full={true}>
+            <Card.Header
+              title="企业用工成本构成"
+            />
+            <Card.Body className='cost-pie'>
+              <PieChart option={costPieOption}></PieChart>
             </Card.Body>
           </Card>
         </WingBlank>

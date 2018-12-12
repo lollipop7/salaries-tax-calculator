@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { NavBar, Icon, Flex, List, WingBlank, Card, InputItem, Button, Checkbox, Picker } from 'antd-mobile';
 import {createForm} from 'rc-form';
 import './style.scss'; 
+import {view as Deductions} from '../../deductions';
 
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -173,6 +174,7 @@ class Main extends Component {
                 <Button 
                   type="primary"
                   inline={true}
+                  onClick={Deductions}
                 >添加抵扣项&nbsp;+</Button>
                 <Flex.Item>已添加{0}个项目</Flex.Item>
               </Flex>
