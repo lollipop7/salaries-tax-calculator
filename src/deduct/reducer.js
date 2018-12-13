@@ -1,4 +1,7 @@
-import {CITY_SELECT} from './actionTypes';
+import {
+  SHOW_DEDUCT, 
+  HIDE_DEDUCT
+} from './actionTypes';
 
 const initState = {
 
@@ -6,7 +9,7 @@ const initState = {
 
 export default (state=initState, action) => {
   switch(action.type) {
-    case CITY_SELECT:
+    case SHOW_DEDUCT:
       return {...state};
     default:
       return state;

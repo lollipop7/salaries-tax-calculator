@@ -1,6 +1,7 @@
-import {CITY_SELECT, CALC, ADD_DEDUCTION} from './actionTypes';
+import * as types from './actionTypes';
 
-export const citySelect = () => ({
-  type: CITY_SELECT,
-  
-})
+const CITY_SELECT = {type: types.CITY_SELECT};
+
+export const citySelect = () => (dispatch, getState) => {
+  dispatch(CITY_SELECT)
+}

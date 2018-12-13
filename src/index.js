@@ -6,7 +6,7 @@ import {Provider} from 'react-redux';
 import Store from './Store';
 
 ReactDOM.render(
-  <Provider>
+  <Provider store={Store}>
     <SalaryTax />
   </Provider>
 , document.getElementById('root'));
