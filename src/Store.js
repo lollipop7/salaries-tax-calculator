@@ -1,12 +1,12 @@
 import {createStore, combineReducers, compose, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
+import {reducer as Main} from './main';
+import {reducer as Deduct} from './deduct';
 
-import {reducer as main} from './main';
-import {reducer as deduct} from './deduct';
 
 const rootReducer = combineReducers({
-  main,
-  deduct
+  Main,
+  Deduct
 })
 
 const store  = createStore(rootReducer, compose(

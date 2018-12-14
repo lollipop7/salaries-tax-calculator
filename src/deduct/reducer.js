@@ -4,13 +4,15 @@ import {
 } from './actionTypes';
 
 const initState = {
-
+  isVisible: false
 }
 
 export default (state=initState, action) => {
   switch(action.type) {
     case SHOW_DEDUCT:
-      return {...state};
+      return {...state, isVisible: true};
+    case HIDE_DEDUCT:
+      return {...state, isVisible: false};
     default:
       return state;
   }

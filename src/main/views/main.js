@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
 import { NavBar, Icon, Flex, List, WingBlank, Card, InputItem, Button, Checkbox, Picker } from 'antd-mobile';
 import {createForm} from 'rc-form';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import * as Actions from '../../Actions';
+import supplySelData from '../../data/supply-housing-fund';
 import './style.scss'; 
 
 const Item = List.Item;
@@ -15,46 +19,13 @@ if (isIPhone) {
   };
 }
 
-const smts = [
-  {
-    label: '1%',
-    value: '1%'
-  },
-  {
-    label: '2%',
-    value: '2%'
-  },
-  {
-    label: '3%',
-    value: '3%'
-  },
-  {
-    label: '4%',
-    value: '4%'
-  },
-  {
-    label: '5%',
-    value: '5%'
-  },
-  {
-    label: '6%',
-    value: '6%'
-  },
-  {
-    label: '7%',
-    value: '7%'
-  },
-  {
-    label: '8%',
-    value: '8%'
-  }
-]
+
 
 class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      smtValue: ['8%']
+      supplyValue: ['8%']
     }
   }
   render() {
@@ -153,9 +124,9 @@ class Main extends Component {
             <List>
               <Picker
                 title="补充公积金比例"
-                data={smts}
+                data={supplySelData}
                 cols={1}
-                value={this.state.smtValue}
+                value={this.state.supplyValue}
                 onChange={v=>console.log(v)}
               >
                 <CheckboxItem 
@@ -173,7 +144,7 @@ class Main extends Component {
                 <Button 
                   type="primary"
                   inline={true}
-                  onClick={()=>{console.log('click')}}
+                  onClick={this.props.showDeduct}
                 >添加抵扣项&nbsp;+</Button>
                 <Flex.Item>已添加{0}个项目</Flex.Item>
               </Flex>
@@ -186,5 +157,10 @@ class Main extends Component {
   }
 }
 
-export default createForm()(Main);
+const mapDispatchToProps = dispatch => ({
+  showDeduct: bindActionCreators(Actions.Deduct.showDeduct, dispatch)
+})
+
+Main = createForm()(Main)
+export default connect(null, mapDispatchToProps)(Main);
 

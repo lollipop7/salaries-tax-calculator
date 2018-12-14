@@ -16,9 +16,10 @@ export  class Chart extends PureComponent {
 
     //设置options
     this.chartInstance.setOption(option)
-    window.onresize = function() {
+    window.addEventListener('resize', ()=>{
       this.chartInstance.resize()
-    }
+    })
+    
   }
   
   componentDidMount() {

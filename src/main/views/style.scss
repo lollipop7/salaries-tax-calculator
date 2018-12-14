@@ -54,18 +54,6 @@
   }
 }
 
-.custom-list {
-  .am-list-body div:not(:last-child) .am-list-line::after {
-    height: 0px !important;
-  }
-  .am-list-body::before {
-    height: 0px !important;
-  }
-  .am-list-body::after {
-    height: 0px !important;
-  }
-}
-
 .nav-bar {
   color: #a0a0a0;
 }
