@@ -1,16 +1,25 @@
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {Modal, List, Picker, Checkbox} from 'antd-mobile';
+import {Modal, List, Picker, Checkbox, InputItem} from 'antd-mobile';
+import {createForm} from 'rc-form';
 import * as Actions from '../../Actions';
 import childrenEduData from '../../data/children-edu.js';
 import oldSupportData from '../../data/old-support.js';
 import continuingEduData from '../../data/continuing-edu.js';
-import './style.scss'
+import './style.scss';
+
+const isIPhone = new RegExp('\\biPhone\\b|\\biPod\\b', 'i').test(window.navigator.userAgent);
+let moneyKeyboardWrapProps;
+if (isIPhone) {
+  moneyKeyboardWrapProps = {
+    onTouchStart: e => e.preventDefault(),
+  };
+}
 
 const CheckboxItem = Checkbox.CheckboxItem;
 
-class Deduct extends Component {
+class DeductComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,6 +32,7 @@ class Deduct extends Component {
     console.log(this.props.isVisible)
   }
   render() {
+    const { getFieldProps } = this.props.form;
     return (
       <div>
       <Modal
@@ -88,6 +98,25 @@ class Deduct extends Component {
                 onChange={v=>{console.log(v)}}
               >
                 大病医疗
+                <InputItem 
+                  {...getFieldProps('medical', {
+                    normalize: (v, prev) => {
+                      if (v && !/^(([1-9]\d*)|0)(\.\d{0,2}?)?$/.test(v)) {
+                        if (v === '.') {
+                          return '0.';
+                        }
+                        return prev;
+                      }
+                      return v;
+                    },
+                  })}
+                  className='rt-list-item'
+                  placeholder="10000.00"
+                  type='money'
+                  onVirtualKeyboardConfirm={v => console.log('onVirtualKeyboardConfirm:', v)}
+                  clear
+                  moneyKeyboardWrapProps = {moneyKeyboardWrapProps}
+                >￥</InputItem>
               </CheckboxItem>
             </List>
           </div>
@@ -104,5 +133,5 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   hideDeduct: bindActionCreators(Actions.Deduct.hideDeduct, dispatch)
 })
-
-export default connect(mapStateToProps, mapDispatchToProps)(Deduct);
+DeductComponent = createForm()(DeductComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(DeductComponent); 

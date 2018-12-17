@@ -44,7 +44,9 @@ class Main extends Component {
             <Flex>
               <span className='am-icon'></span>
               <span>当前城市</span>
-              <a href="#">上海</a>
+              <b onClick={
+                this.props.showRegions
+              }>上海</b>
             </Flex>
           </div>
         </Flex>
@@ -158,7 +160,8 @@ class Main extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  showDeduct: bindActionCreators(Actions.Deduct.showDeduct, dispatch)
+  showDeduct: bindActionCreators(Actions.Deduct.showDeduct, dispatch),
+  showRegions: bindActionCreators(Actions.Regions.showRegions, dispatch),
 })
 
 Main = createForm()(Main)
