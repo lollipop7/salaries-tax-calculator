@@ -30,7 +30,7 @@ class Main extends Component {
   }
   render() {
     const { getFieldProps } = this.props.form;
-    // console.log(getFieldProps)
+    console.log(this.props.cityname)
     return(
       <div>
         <NavBar
@@ -46,7 +46,7 @@ class Main extends Component {
               <span>当前城市</span>
               <b onClick={
                 this.props.showRegions
-              }>上海</b>
+              }>{this.props.cityname}</b>
             </Flex>
           </div>
         </Flex>
@@ -159,11 +159,15 @@ class Main extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  cityname: state.Regions.cityname
+})
+
 const mapDispatchToProps = dispatch => ({
   showDeduct: bindActionCreators(Actions.Deduct.showDeduct, dispatch),
   showRegions: bindActionCreators(Actions.Regions.showRegions, dispatch),
 })
 
 Main = createForm()(Main)
-export default connect(null, mapDispatchToProps)(Main);
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
 

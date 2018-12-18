@@ -1,4 +1,4 @@
-const regions = [
+module.exports = [
   {
     "cityList": [
       {
@@ -14,15 +14,15 @@ const regions = [
         "hot": false
       },
       {
-        "area": "呼和浩特",
+        "area": "石家庄",
         "hot": false
       },
       {
-        "area": "石家庄",
+        "area": "呼和浩特",
         "hot": false
       }
     ],
-    "nameStr": "华北地区："
+    "nameStr": "华北地区"
   },
   {
     "cityList": [
@@ -67,7 +67,7 @@ const regions = [
         "hot": false
       }
     ],
-    "nameStr": "华东地区："
+    "nameStr": "华东地区"
   },
   {
     "cityList": [
@@ -88,7 +88,7 @@ const regions = [
         "hot": false 
       }    
     ],
-    "nameStr": "华中地区："
+    "nameStr": "华中地区"
   },
   {
     "cityList": [
@@ -121,7 +121,7 @@ const regions = [
         "hot": false 
       }
     ],
-    "nameStr": "华南地区："
+    "nameStr": "华南地区"
   },
   {
     "cityList": [
@@ -142,7 +142,7 @@ const regions = [
         "hot": false 
       }
     ],
-    "nameStr": "东北地区："
+    "nameStr": "东北地区"
   },
   {
     "cityList": [
@@ -167,7 +167,7 @@ const regions = [
         "hot": false
       }
     ],
-    "nameStr": "西北地区："
+    "nameStr": "西北地区"
   },
   {
     "cityList": [
@@ -188,6 +188,6 @@ const regions = [
         "hot": false
       }
     ],
-    "nameStr": "西南地区："
+    "nameStr": "西南地区"
   }
 ]
