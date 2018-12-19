@@ -5,7 +5,7 @@ import {
 } from './actionTypes';
 
 const initState = {
-  isVisible: true,
+  isVisible: false,
   cityname: '上海'
 }
 

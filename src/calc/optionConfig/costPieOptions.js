@@ -16,9 +16,9 @@
  * #d8d8d8 补充公积金（企业） 0.0%
  */
 
-const dataList = ['58.9%', '5.8%', '1.4%', '0.4%', '5.1%', '0.0%', '0.8%', '14.5%', '6.9%', '0.4%', '0.1%', '0.7%', '5.1%', '0.0%'],
+const dataList = ['14.5%', '6.9%', '0.4%', '0.1%', '0.7%', '5.1%', '0.0%'],
 nameList = [
-  '税后工资（个人）', '养老保险（个人）', '医疗保险（个人）', '失业保险（个人）', '住房公积金（个人）', '补充公积金（个人）', '个人所得税', '养老保险（企业）', '医疗保险（企业）', '失业保险（企业）', '工伤保险（企业）', '生育保险（企业）', '住房公积金（企业）', '补充公积金（企业）'
+  '养老保险（企业）', '医疗保险（企业）', '失业保险（企业）', '工伤保险（企业）', '生育保险（企业）', '住房公积金（企业）', '补充公积金（企业）'
 ],
 cost = '¥13820';
 export const costPieOption = {
@@ -28,7 +28,6 @@ export const costPieOption = {
     confine: true // 是否将 tooltip 框限制在图表的区域内。
   },
   color: [
-    '#5fc3be', '#3f4549', '#d1d969', '#fb9da2', '#4799cd', '#ffe200', '#ffbb7c',
     '#2e9458', '#ed58b0', '#b6e5c0', '#7962a7', '#ee4d4d', '#d8a068', '#d8d8d8'
   ],
   legend: {
@@ -41,13 +40,6 @@ export const costPieOption = {
       show: true
     },
     data: [
-      {name: '税后工资（个人）', icon: 'roundRect'},
-      {name: '养老保险（个人）', icon: 'roundRect'},
-      {name: '医疗保险（个人）', icon: 'roundRect'},
-      {name: '失业保险（个人）', icon: 'roundRect'},
-      {name: '住房公积金（个人）', icon: 'roundRect'},
-      {name: '补充公积金（个人）', icon: 'roundRect'},
-      {name: '个人所得税', icon: 'roundRect'},
       {name: '养老保险（企业）', icon: 'roundRect'},
       {name: '医疗保险（企业）', icon: 'roundRect'},
       {name: '失业保险（企业）', icon: 'roundRect'},
@@ -91,13 +83,6 @@ export const costPieOption = {
         }
       },
       data:[ //系列中的数据内容数组
-        {value: 58.9, name:'税后工资（个人）'},
-        {value: 5.8, name:'养老保险（个人）'},
-        {value: 1.4, name:'医疗保险（个人）'},
-        {value: 0.4, name:'失业保险（个人）'},
-        {value: 5.1, name:'住房公积金（个人）'},
-        {value: 0.0, name:'补充公积金（个人）'},
-        {value: 0.8, name:'个人所得税'},
         {value: 14.5, name:'养老保险（企业）'},
         {value: 6.9, name:'医疗保险（企业）'},
         {value: 0.4, name:'失业保险（企业）'},

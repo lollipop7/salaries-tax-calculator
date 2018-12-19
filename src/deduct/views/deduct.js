@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {Modal, List, Picker, Checkbox, InputItem} from 'antd-mobile';
+import {Modal, List, Picker, Checkbox, InputItem, Flex, Button} from 'antd-mobile';
 import {createForm} from 'rc-form';
 import * as Actions from '../../Actions';
 import childrenEduData from '../../data/children-edu.js';
@@ -23,8 +23,7 @@ class DeductComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      childrenEduValue: ['半数抵扣'],
-      oldSupportValue: ['1人赡养'],
+      childrenEduValue: [12000],
       continuingEduValue: ['教育期间']
     };
   }
@@ -62,7 +61,35 @@ class DeductComponent extends Component {
                   子女教育
                 </CheckboxItem>
               </Picker>
-              <Picker
+              <InputItem 
+                {...getFieldProps('old_support', {
+                  normalize: (v, prev) => {
+                    if (v && !/^(([1-9]\d*)|0)(\.\d{0,2}?)?$/.test(v)) {
+                      if (v === '.') {
+                        return '0.';
+                      }
+                      return prev;
+                    }
+                    return v;
+                  },
+                })}
+                className='rt-list-item'
+                placeholder='0-2000'
+                type='money'
+                onVirtualKeyboardConfirm={v => console.log('onVirtualKeyboardConfirm:', v)}
+                clear
+                editable
+                maxLength={5}
+                moneyKeyboardWrapProps = {moneyKeyboardWrapProps}
+              >
+                <CheckboxItem 
+                  key="old_support"
+                  onChange={v=>{console.log(v)}}
+                >   
+                  赡养老人
+                </CheckboxItem>
+              </InputItem>
+              {/* <Picker
                 title="赡养老人"
                 data={oldSupportData}
                 cols={1}
@@ -76,7 +103,7 @@ class DeductComponent extends Component {
                 >
                   赡养老人
                 </CheckboxItem>
-              </Picker>
+              </Picker> */}
               <Picker
                 title="继续教育"
                 data={continuingEduData}
@@ -92,33 +119,98 @@ class DeductComponent extends Component {
                   继续教育
                 </CheckboxItem>
               </Picker>
-              <CheckboxItem 
-                className="lt-checkbox"
-                key="medical"
-                onChange={v=>{console.log(v)}}
-              >
-                大病医疗
-                <InputItem 
-                  {...getFieldProps('medical', {
-                    normalize: (v, prev) => {
-                      if (v && !/^(([1-9]\d*)|0)(\.\d{0,2}?)?$/.test(v)) {
-                        if (v === '.') {
-                          return '0.';
-                        }
-                        return prev;
+              <InputItem 
+                {...getFieldProps('medical', {
+                  normalize: (v, prev) => {
+                    if (v && !/^(([1-9]\d*)|0)(\.\d{0,2}?)?$/.test(v)) {
+                      if (v === '.') {
+                        return '0.';
                       }
-                      return v;
-                    },
-                  })}
-                  className='rt-list-item'
-                  placeholder="10000.00"
-                  type='money'
-                  onVirtualKeyboardConfirm={v => console.log('onVirtualKeyboardConfirm:', v)}
-                  clear
-                  moneyKeyboardWrapProps = {moneyKeyboardWrapProps}
-                >￥</InputItem>
-              </CheckboxItem>
+                      return prev;
+                    }
+                    return v;
+                  },
+                })}
+                className='rt-list-item'
+                placeholder='15000-60000'
+                defaultValue={15000}
+                type='money'
+                onVirtualKeyboardConfirm={v => console.log('onVirtualKeyboardConfirm:', v)}
+                clear
+                editable
+                maxLength={5}
+                moneyKeyboardWrapProps = {moneyKeyboardWrapProps}
+              >
+                <CheckboxItem 
+                  key="medical"
+                  onChange={v=>{console.log(v)}}
+                >   
+                  大病医疗
+                </CheckboxItem>
+              </InputItem>
+              <InputItem 
+                {...getFieldProps('housing_rent', {
+                  normalize: (v, prev) => {
+                    if (v && !/^(([1-9]\d*)|0)(\.\d{0,2}?)?$/.test(v)) {
+                      if (v === '.') {
+                        return '0.';
+                      }
+                      return prev;
+                    }
+                    return v;
+                  },
+                })}
+                className='rt-list-item'
+                placeholder='0-1200'
+                type='money'
+                onVirtualKeyboardConfirm={v => console.log('onVirtualKeyboardConfirm:', v)}
+                clear
+                editable
+                maxLength={5}
+                moneyKeyboardWrapProps = {moneyKeyboardWrapProps}
+              >
+                <CheckboxItem 
+                  key="housing_rent"
+                  onChange={v=>{console.log(v)}}
+                >   
+                  住房租金
+                </CheckboxItem>
+              </InputItem>
+              <InputItem 
+                {...getFieldProps('housing_loan', {
+                  normalize: (v, prev) => {
+                    if (v && !/^(([1-9]\d*)|0)(\.\d{0,2}?)?$/.test(v)) {
+                      if (v === '.') {
+                        return '0.';
+                      }
+                      return prev;
+                    }
+                    return v;
+                  },
+                })}
+                className='rt-list-item'
+                placeholder='0-2000'
+                type='money'
+                onVirtualKeyboardConfirm={v => console.log('onVirtualKeyboardConfirm:', v)}
+                clear
+                editable
+                maxLength={5}
+                moneyKeyboardWrapProps = {moneyKeyboardWrapProps}
+              >
+                <CheckboxItem 
+                  key="housing_loan"
+                  onChange={v=>{console.log(v)}}
+                >   
+                  房贷利息
+                </CheckboxItem>
+              </InputItem>
             </List>
+            <Button 
+              type="primary"
+              inline
+              className="btn-deduct"
+              onClick={v=>{console.log(v)}}
+            >确定</Button>
           </div>
         </Modal>
       </div>

@@ -34,6 +34,11 @@ code {
     @include border-bottom;
   }
 }
-
+.am-list-item .am-list-line .am-list-content {
+  font-size: 12px;
+}
+.am-list-item .am-input-control input {
+  font-size: 16px;
+}
 
 

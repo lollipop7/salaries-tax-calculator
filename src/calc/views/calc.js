@@ -26,42 +26,98 @@ class Calc extends Component {
               </Item>
               <Item>
                 <Flex>
-                  <Flex.Item> 养老保险金</Flex.Item><Flex.Item>800.00 (8%)</Flex.Item><Flex.Item>2000.00 (20%)</Flex.Item>
+                  <Flex.Item> 养老保险金</Flex.Item>
+                  <Flex.Item>
+                    <span>800.00</span>
+                    <span className="percent-item">(8%)</span>
+                  </Flex.Item>
+                  <Flex.Item>
+                    <span>2000.00</span>
+                    <span className="percent-item">(20%)</span>
+                  </Flex.Item>
                 </Flex>
               </Item>
               <Item>
                 <Flex>
-                  <Flex.Item> 医疗保险金</Flex.Item><Flex.Item>200.00 (2%)</Flex.Item><Flex.Item>950.00 (9.5%)</Flex.Item>
+                  <Flex.Item> 医疗保险金</Flex.Item>
+                  <Flex.Item>
+                    <span>200.00</span>
+                    <span className="percent-item">(2%)</span>
+                  </Flex.Item>
+                  <Flex.Item>
+                    <span>950.00</span>
+                    <span className="percent-item">(9.5%)</span>
+                  </Flex.Item>
                 </Flex>
               </Item>
               <Item>
                 <Flex>
-                  <Flex.Item> 失业保险金</Flex.Item><Flex.Item>50.00 (0.5%)</Flex.Item><Flex.Item>50.00 (0.5%)</Flex.Item>
+                  <Flex.Item> 失业保险金</Flex.Item>
+                  <Flex.Item>
+                    <span>50.00</span>
+                    <span className="percent-item">(0.5%)</span>
+                  </Flex.Item>
+                  <Flex.Item>
+                    <span>50.00</span>
+                    <span className="percent-item">(0.5%)</span>
+                  </Flex.Item>
                 </Flex>
               </Item>
               <Item>
                 <Flex>
-                  <Flex.Item> 住房公积金</Flex.Item><Flex.Item>700.00 (7%)</Flex.Item><Flex.Item>700.00 (7%)</Flex.Item>
+                  <Flex.Item>住房公积金</Flex.Item>
+                  <Flex.Item>
+                    <span>700.00</span>
+                    <span className="percent-item">(7%)</span>
+                  </Flex.Item>
+                  <Flex.Item>
+                    <span>700.00</span>
+                    <span className="percent-item">(7%)</span>
+                  </Flex.Item>
                 </Flex>
               </Item>
               <Item>
                 <Flex>
-                  <Flex.Item> 补充公积金</Flex.Item><Flex.Item>0.00 (0%)</Flex.Item><Flex.Item>0.00 (0%)</Flex.Item>
+                  <Flex.Item> 补充公积金</Flex.Item>
+                  <Flex.Item>
+                    <span>0.00</span>
+                    <span className="percent-item">(0%)</span>
+                  </Flex.Item>
+                  <Flex.Item>
+                    <span>0.00</span>
+                    <span className="percent-item">(0%)</span>
+                  </Flex.Item>
                 </Flex>
               </Item>
               <Item>
                 <Flex>
-                  <Flex.Item> 工伤保险金</Flex.Item><Flex.Item></Flex.Item><Flex.Item>2000.00 (8%)</Flex.Item>
+                  <Flex.Item> 工伤保险金</Flex.Item>
+                  <Flex.Item></Flex.Item>
+                  <Flex.Item>
+                    <span>2000.00</span>
+                    <span className="percent-item">(8%)</span>
+                  </Flex.Item>
                 </Flex>
               </Item>
               <Item>
                 <Flex>
-                  <Flex.Item> 生育保险金</Flex.Item><Flex.Item></Flex.Item><Flex.Item>2000.00 (8%)</Flex.Item>
+                  <Flex.Item> 生育保险金</Flex.Item>
+                  <Flex.Item></Flex.Item>
+                  <Flex.Item>
+                    <span>2000.00</span>
+                    <span className="percent-item">(8%)</span>
+                  </Flex.Item>
                 </Flex>
               </Item>
               <Item>
                 <Flex>
-                  <Flex.Item> 共计支出</Flex.Item><Flex.Item>1750.00</Flex.Item><Flex.Item>3820.00</Flex.Item>
+                  <Flex.Item> 共计支出</Flex.Item>
+                  <Flex.Item>
+                    <span className="st-title">1750.00</span>
+                  </Flex.Item>
+                  <Flex.Item>
+                    <span className="st-title">3820.00</span>
+                  </Flex.Item>
                 </Flex>
               </Item>
             </List>
@@ -75,7 +131,8 @@ class Calc extends Component {
             <List renderHeader={() => '个税缴纳明细'}>
               <Item>
                 <Flex>
-                  <Flex.Item> 应税工资</Flex.Item><Flex.Item>8250.00 (0个抵扣项)</Flex.Item>
+                  <Flex.Item> 应税工资</Flex.Item>
+                  <Flex.Item>8250.00 <span className="st-title under-line">(0个抵扣项)</span></Flex.Item>
                 </Flex>
               </Item>
               <Item>
@@ -85,7 +142,8 @@ class Calc extends Component {
               </Item>
               <Item>
                 <Flex>
-                  <Flex.Item> 税后工资</Flex.Item><Flex.Item>8135.00</Flex.Item>
+                  <Flex.Item> 税后工资</Flex.Item>
+                  <Flex.Item><span className="st-title">8135.00</span></Flex.Item>
                 </Flex>
               </Item>
             </List>

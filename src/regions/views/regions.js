@@ -27,6 +27,7 @@ class Regions extends Component {
   handleSetArea(e){
     let cityname = e.target.dataset.cityName;
     this.props.setArea(cityname);
+    this.props.hideRegions();
   }
 
   render(){

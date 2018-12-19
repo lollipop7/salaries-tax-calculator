@@ -1,9 +1,26 @@
 
 .deduct-modal {
   width: 90%;
+  h3 {
+    margin: 0;
+    padding-left: 15px;
+    text-align: left;
+    font-size: 16px;
+  }
   .am-modal-content {
     .am-modal-body {
       padding: 0 20px 15px;
     }
   }
+}
+
+.rt-list-item.am-input-item {
+  padding-left: 0;
+  .am-input-label.am-input-label-5 {
+    width: auto;
+  }
+}
+
+.btn-deduct {
+  margin-top: 20px;
 }
