@@ -50,6 +50,9 @@ class Main extends Component {
         <WingBlank size="lg">
           <Card className='s-card custom-list'>
             <List>
+              <Item className='st-title'>
+                税前工资（月薪）
+              </Item>
               <InputItem 
                 {...getFieldProps('salary', {
                   normalize: (v, prev) => {
@@ -69,30 +72,10 @@ class Main extends Component {
                 clear
                 moneyKeyboardAlign="right"
                 moneyKeyboardWrapProps={moneyKeyboardWrapProps}
-              >税前工资（月薪）</InputItem>
+                onChange={v=>console.log(v)}
+              >¥</InputItem>
             </List>
-            <List>
-              <InputItem 
-                {...getFieldProps('tax_threshold', {
-                  normalize: (v, prev) => {
-                    if (v && !/^(([1-9]\d*)|0)(\.\d{0,2}?)?$/.test(v)) {
-                      if (v === '.') {
-                        return '0.';
-                      }
-                      return prev;
-                    }
-                    return v;
-                  },
-                })}
-                className='mid-list-item'
-                placeholder="10000.00"
-                type='money'
-                onVirtualKeyboardConfirm={v => console.log('onVirtualKeyboardConfirm:', v)}
-                clear
-                moneyKeyboardAlign="right"
-                moneyKeyboardWrapProps={moneyKeyboardWrapProps}
-              >起征点（月薪）</InputItem>
-            </List>
+            {/* 
             <List>
               <InputItem 
                 {...getFieldProps('base_social_security', {
@@ -136,142 +119,46 @@ class Main extends Component {
                 moneyKeyboardAlign="right"
                 moneyKeyboardWrapProps = {moneyKeyboardWrapProps}
               >公积金汇缴基数</InputItem>
-            </List>
-            {
-              true && 
-              <List>
-                <Item>
-                  <Flex>
-                    <Flex.Item></Flex.Item><Flex.Item>个人部分</Flex.Item><Flex.Item>单位部分</Flex.Item>
-                  </Flex>
-                </Item>
-                <div className="percent-list">
-                  <Item>
-                    <Flex>
-                      <Flex.Item><span className="st-title">社保缴费比例</span></Flex.Item>
-                      <Flex.Item>
-                        <InputItem
-                          {...getFieldProps('p_pension_rate')}
-                          placeholder="8%"
-                        />
-                      </Flex.Item>
-                      <Flex.Item>
-                        <InputItem
-                          {...getFieldProps('c_pension_rate')}
-                          placeholder="20%"
-                        />
-                      </Flex.Item>
-                    </Flex>
-                  </Item>
-                  <Item>
-                    <Flex>
-                      <Flex.Item><span className="st-title">医保缴费比例</span></Flex.Item>
-                      <Flex.Item>
-                        <InputItem
-                          {...getFieldProps('p_medical_rate')}
-                          placeholder="2%"
-                        />
-                      </Flex.Item>
-                      <Flex.Item>
-                        <InputItem
-                          {...getFieldProps('c_medical_rate')}
-                          placeholder="9.5%"
-                        />
-                      </Flex.Item>
-                    </Flex>
-                  </Item>
-                  <Item>
-                    <Flex>
-                      <Flex.Item><span className="st-title">失业缴费比例</span></Flex.Item>
-                      <Flex.Item>
-                        <InputItem
-                          {...getFieldProps('p_unemployed_rate')}
-                          placeholder="0.5%"
-                        />
-                      </Flex.Item>
-                      <Flex.Item>
-                        <InputItem
-                          {...getFieldProps('c_unemployed_rate')}
-                          placeholder="0.5%"
-                        />
-                      </Flex.Item>
-                    </Flex>
-                  </Item>
-                  <Item>
-                    <Flex>
-                      <Flex.Item><span className="st-title">工伤缴费比例</span></Flex.Item>
-                      <Flex.Item></Flex.Item>
-                      <Flex.Item>
-                        <InputItem
-                          {...getFieldProps('c_injury_rate')}
-                          placeholder="0.2-1.9%"
-                        />
-                      </Flex.Item>
-                    </Flex>
-                  </Item>
-                  <Item>
-                    <Flex>
-                      <Flex.Item><span className="st-title">生育缴费比例</span></Flex.Item>
-                      <Flex.Item></Flex.Item>
-                      <Flex.Item>
-                        <InputItem
-                          {...getFieldProps('c_childbearing_rate')}
-                          placeholder="1%"
-                        />
-                      </Flex.Item>
-                    </Flex>
-                  </Item>
-                </div>
-              </List>
-            }
-            {/* <List>
-              <Item className='st-title'>
-                税后工资（2018.10.01新税法）
-              </Item>
-              <Item 
-                className='mid-list-item'
-                extra={"计算后的工资"}
-              >￥</Item>
             </List> */}
             <List>
               <Button 
-                className='others-btn'
-                type="primary"  inline>更多</Button>
+                className='calc-btn'
+                type="primary"  inline>计算</Button>  
             </List>
           </Card>
           <div className="deduct-list custom-list">
-            {/* <List>
+            <List>
               <Item className='st-title'>
-                社保基数
+                社保基数{true && '（下限）'}
               </Item>
-              <Item
+              <InputItem
                 className='mid-list-item'
+                defaultValue={4279}
                 extra={
                   <CheckboxItem key="social_base" className="rt-checkbox">
                     自定义
                   </CheckboxItem>
                 }
               >
-                社保初始数值
-              </Item> 
+              </InputItem> 
             </List>
             <List>
               <Item className='st-title'>
               公积金汇缴基数
               </Item>
-              <Item
+              <InputItem
                 className='mid-list-item'
+                defaultValue={7000}
                 extra={
                   <CheckboxItem key="housing_fund" className="rt-checkbox">
                     自定义
                   </CheckboxItem>
               }
               >
-                公积金初始数值
-              </Item> 
-            </List> */}
+              </InputItem> 
+            </List>
             <List>
-              <Picker
+              {/* <Picker
                 title="补充公积金比例"
                 data={supplySelData}
                 cols={1}
@@ -285,7 +172,154 @@ class Main extends Component {
                 >
                   汇缴补充公积金
                 </CheckboxItem>
-              </Picker>
+              </Picker> */}
+              {
+                true && 
+                <div className="custom-percent">
+                  <div className="st-title">
+                    自定义汇缴比例
+                    <span className="am-icon"></span>
+                  </div>
+                  <Item className="custom-header">
+                    <Flex>
+                      <Flex.Item></Flex.Item><Flex.Item>个人部分</Flex.Item><Flex.Item>单位部分</Flex.Item>
+                    </Flex>
+                  </Item>
+                  <Item>
+                    <Flex>
+                      <Flex.Item>养老保险金</Flex.Item>
+                      <Flex.Item>
+                        <InputItem
+                          {...getFieldProps('p_pension_rate')}
+                          extra={'%'}
+                          defaultValue={8}
+                        />
+                      </Flex.Item>
+                      <Flex.Item>
+                        <InputItem
+                          {...getFieldProps('c_pension_rate')}
+                          extra={'%'}
+                          defaultValue={20}
+                        />
+                      </Flex.Item>
+                    </Flex>
+                  </Item>
+                  <Item>
+                    <Flex>
+                      <Flex.Item>医保保险金</Flex.Item>
+                      <Flex.Item>
+                        <InputItem
+                          {...getFieldProps('p_medical_rate')}
+                          extra={'%'}
+                          defaultValue={2}
+                        />
+                      </Flex.Item>
+                      <Flex.Item>
+                        <InputItem
+                          {...getFieldProps('c_medical_rate')}
+                          extra={'%'}
+                          defaultValue={9.5}
+                        />
+                      </Flex.Item>
+                    </Flex>
+                  </Item>
+                  <Item>
+                    <Flex>
+                      <Flex.Item>失业保险金</Flex.Item>
+                      <Flex.Item>
+                        <InputItem
+                          {...getFieldProps('p_unemployed_rate')}
+                          extra={'%'}
+                          defaultValue={0.5}
+                        />
+                      </Flex.Item>
+                      <Flex.Item>
+                        <InputItem
+                          {...getFieldProps('c_unemployed_rate')}
+                          extra={'%'}
+                          defaultValue={0.5}
+                        />
+                      </Flex.Item>
+                    </Flex>
+                  </Item>
+                  <Item>
+                    <Flex>
+                      <Flex.Item>住房公积金</Flex.Item>
+                      <Flex.Item>
+                        <InputItem
+                          {...getFieldProps('housingFund_rate')}
+                          extra={'%'}
+                          defaultValue={0.5}
+                        />
+                      </Flex.Item>
+                      <Flex.Item>
+                        <InputItem
+                          {...getFieldProps('housingFund_rate')}
+                          extra={'%'}
+                          defaultValue={0.5}
+                        />
+                      </Flex.Item>
+                    </Flex>
+                  </Item>
+                  <Item>
+                    <Flex>
+                      <Flex.Item>补充公积金</Flex.Item>
+                      <Flex.Item>
+                        <InputItem
+                          {...getFieldProps('housingFundAddition_rate')}
+                          extra={'%'}
+                          defaultValue={0}
+                        />
+                      </Flex.Item>
+                      <Flex.Item>
+                        <InputItem
+                          {...getFieldProps('housingFundAddition_rate')}
+                          extra={'%'}
+                          defaultValue={0}
+                        />
+                      </Flex.Item>
+                    </Flex>
+                  </Item>
+                  <Item>
+                    <Flex>
+                      <Flex.Item>工伤保险金</Flex.Item>
+                      <Flex.Item>
+                        <InputItem
+                          {...getFieldProps('p_injury_rate')}
+                          extra={'%'}
+                          defaultValue={0}
+                        />
+                      </Flex.Item>
+                      <Flex.Item>
+                        <InputItem
+                          {...getFieldProps('c_injury_rate')}
+                          extra={'%'}
+                          defaultValue={8}
+                        />
+                      </Flex.Item>
+                    </Flex>
+                  </Item>
+                  <Item>
+                    <Flex>
+                      <Flex.Item>生育保险金</Flex.Item>
+                      <Flex.Item>
+                        <InputItem
+                          {...getFieldProps('c_childbearing_rate')}
+                          extra={'%'}
+                          defaultValue={0}
+                        />
+                      </Flex.Item>
+                      <Flex.Item>
+                        <InputItem
+                          {...getFieldProps('c_childbearing_rate')}
+                          extra={'%'}
+                          defaultValue={8}
+                        />
+                      </Flex.Item>
+                    </Flex>
+                  </Item>
+                </div>
+              }
               <Flex
                 direction="column"
                 className="add-deduct"
