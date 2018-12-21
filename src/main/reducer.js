@@ -1,7 +1,6 @@
 import {CITY_SELECT} from './actionTypes';
 
 const initState = {
-
 }
 
 export default (state=initState, action) => {

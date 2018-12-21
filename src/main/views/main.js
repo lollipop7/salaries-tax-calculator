@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 import * as Actions from '../../Actions';
 import supplySelData from '../../data/supply-housing-fund';
 import './style.scss'; 
+import Custom from './custom';
 
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -24,12 +25,63 @@ if (isIPhone) {
 class Main extends Component {
   constructor(props) {
     super(props);
+
+    this.handleCustomPercent = this.handleCustomPercent.bind(this);
+    this.handleCalc = this.handleCalc.bind(this);
+    this.handleInput = this.handleInput.bind(this);
     this.state = {
-      supplyValue: ['8%']
+      isCustomVisible: true,
+      calc_btn: '计算',
+      calc_num: 1,
+      supplyValue: ['8%'],
+      salary: 10000.00,
+      isSocialBaseCustom: false,
+      isHousingFundCustom: false
     }
   }
+
+  setStateAsync(state) {
+    return new Promise((resolve) => {
+      this.setState(state, resolve)
+    })
+  }
+
+  handleCustomPercent() {
+    const { isCustomVisible } = this.state;
+    this.setStateAsync({isCustomVisible: !isCustomVisible})
+  }
+
+  handleCalc() {
+    let {isReCalc, calc_num} = this.state;
+    this.setStateAsync({
+      calc_num: calc_num ++
+    }).then(() => {
+      if(calc_num > 1) {
+        this.setStateAsync({
+          calc_btn: '重新计算'
+        })
+      }
+    })
+  }
+
+  handleInput(v) {
+    this.setStateAsync()
+  }
+
+  handleEdit(field, v) {
+    this.setStateAsync({
+      [field]: !v
+    })
+  }
+
   render() {
     const { getFieldProps } = this.props.form;
+    const {
+      isCustomVisible, 
+      calc_btn,
+      isSocialBaseCustom,
+      isHousingFundCustom
+    } = this.state;
     return(
       <div>
         <NavBar
@@ -64,66 +116,24 @@ class Main extends Component {
                     }
                     return v;
                   },
+                  onChange: this.handleInput,
+                  initialValue: this.state.salary
                 })}
                 className='mid-list-item'
-                placeholder="10000.00"
                 type='money'
                 onVirtualKeyboardConfirm={v => console.log('onVirtualKeyboardConfirm:', v)}
                 clear
                 moneyKeyboardAlign="right"
                 moneyKeyboardWrapProps={moneyKeyboardWrapProps}
-                onChange={v=>console.log(v)}
               >¥</InputItem>
             </List>
-            {/* 
-            <List>
-              <InputItem 
-                {...getFieldProps('base_social_security', {
-                  normalize: (v, prev) => {
-                    if (v && !/^(([1-9]\d*)|0)(\.\d{0,2}?)?$/.test(v)) {
-                      if (v === '.') {
-                        return '0.';
-                      }
-                      return prev;
-                    }
-                    return v;
-                  },
-                })}
-                className='mid-list-item'
-                placeholder="4279-21396元"
-                type='money'
-                onVirtualKeyboardConfirm={v => console.log('onVirtualKeyboardConfirm:', v)}
-                clear
-                moneyKeyboardAlign="right"
-                moneyKeyboardWrapProps = {moneyKeyboardWrapProps}
-              >社保基数</InputItem>
-            </List>
-            <List>
-              <InputItem 
-                {...getFieldProps('base_housingFund', {
-                  normalize: (v, prev) => {
-                    if (v && !/^(([1-9]\d*)|0)(\.\d{0,2}?)?$/.test(v)) {
-                      if (v === '.') {
-                        return '0.';
-                      }
-                      return prev;
-                    }
-                    return v;
-                  },
-                })}
-                className='mid-list-item'
-                placeholder="4279-21396元"
-                type='money'
-                onVirtualKeyboardConfirm={v => console.log('onVirtualKeyboardConfirm:', v)}
-                clear
-                moneyKeyboardAlign="right"
-                moneyKeyboardWrapProps = {moneyKeyboardWrapProps}
-              >公积金汇缴基数</InputItem>
-            </List> */}
             <List>
               <Button 
                 className='calc-btn'
-                type="primary"  inline>计算</Button>  
+                type="primary"  
+                inline
+                onClick={this.handleCalc}
+              >{calc_btn}</Button>  
             </List>
           </Card>
           <div className="deduct-list custom-list">
@@ -134,8 +144,13 @@ class Main extends Component {
               <InputItem
                 className='mid-list-item'
                 defaultValue={4279}
+                editable={isSocialBaseCustom}
                 extra={
-                  <CheckboxItem key="social_base" className="rt-checkbox">
+                  <CheckboxItem 
+                    key="social_base" 
+                    className="rt-checkbox"
+                    onChange={this.handleEdit.bind(this, 'isSocialBaseCustom', isSocialBaseCustom)}
+                  >
                     自定义
                   </CheckboxItem>
                 }
@@ -149,8 +164,13 @@ class Main extends Component {
               <InputItem
                 className='mid-list-item'
                 defaultValue={7000}
+                editable={isHousingFundCustom}
                 extra={
-                  <CheckboxItem key="housing_fund" className="rt-checkbox">
+                  <CheckboxItem 
+                    key="housing_fund" 
+                    className="rt-checkbox"
+                    onChange={this.handleEdit.bind(this, 'isHousingFundCustom', isHousingFundCustom)}
+                  >
                     自定义
                   </CheckboxItem>
               }
@@ -176,148 +196,15 @@ class Main extends Component {
               {
                 true && 
                 <div className="custom-percent">
-                  <div className="st-title">
+                  <div className="st-title" onClick={this.handleCustomPercent}>
                     自定义汇缴比例
-                    <span className="am-icon"></span>
+                    <i className={`${isCustomVisible ? 'arrow-up' : ''}`}></i>
                   </div>
-                  <Item className="custom-header">
-                    <Flex>
-                      <Flex.Item></Flex.Item><Flex.Item>个人部分</Flex.Item><Flex.Item>单位部分</Flex.Item>
-                    </Flex>
-                  </Item>
-                  <Item>
-                    <Flex>
-                      <Flex.Item>养老保险金</Flex.Item>
-                      <Flex.Item>
-                        <InputItem
-                          {...getFieldProps('p_pension_rate')}
-                          extra={'%'}
-                          defaultValue={8}
-                        />
-                      </Flex.Item>
-                      <Flex.Item>
-                        <InputItem
-                          {...getFieldProps('c_pension_rate')}
-                          extra={'%'}
-                          defaultValue={20}
-                        />
-                      </Flex.Item>
-                    </Flex>
-                  </Item>
-                  <Item>
-                    <Flex>
-                      <Flex.Item>医保保险金</Flex.Item>
-                      <Flex.Item>
-                        <InputItem
-                          {...getFieldProps('p_medical_rate')}
-                          extra={'%'}
-                          defaultValue={2}
-                        />
-                      </Flex.Item>
-                      <Flex.Item>
-                        <InputItem
-                          {...getFieldProps('c_medical_rate')}
-                          extra={'%'}
-                          defaultValue={9.5}
-                        />
-                      </Flex.Item>
-                    </Flex>
-                  </Item>
-                  <Item>
-                    <Flex>
-                      <Flex.Item>失业保险金</Flex.Item>
-                      <Flex.Item>
-                        <InputItem
-                          {...getFieldProps('p_unemployed_rate')}
-                          extra={'%'}
-                          defaultValue={0.5}
-                        />
-                      </Flex.Item>
-                      <Flex.Item>
-                        <InputItem
-                          {...getFieldProps('c_unemployed_rate')}
-                          extra={'%'}
-                          defaultValue={0.5}
-                        />
-                      </Flex.Item>
-                    </Flex>
-                  </Item>
-                  <Item>
-                    <Flex>
-                      <Flex.Item>住房公积金</Flex.Item>
-                      <Flex.Item>
-                        <InputItem
-                          {...getFieldProps('housingFund_rate')}
-                          extra={'%'}
-                          defaultValue={0.5}
-                        />
-                      </Flex.Item>
-                      <Flex.Item>
-                        <InputItem
-                          {...getFieldProps('housingFund_rate')}
-                          extra={'%'}
-                          defaultValue={0.5}
-                        />
-                      </Flex.Item>
-                    </Flex>
-                  </Item>
-                  <Item>
-                    <Flex>
-                      <Flex.Item>补充公积金</Flex.Item>
-                      <Flex.Item>
-                        <InputItem
-                          {...getFieldProps('housingFundAddition_rate')}
-                          extra={'%'}
-                          defaultValue={0}
-                        />
-                      </Flex.Item>
-                      <Flex.Item>
-                        <InputItem
-                          {...getFieldProps('housingFundAddition_rate')}
-                          extra={'%'}
-                          defaultValue={0}
-                        />
-                      </Flex.Item>
-                    </Flex>
-                  </Item>
-                  <Item>
-                    <Flex>
-                      <Flex.Item>工伤保险金</Flex.Item>
-                      <Flex.Item>
-                        <InputItem
-                          {...getFieldProps('p_injury_rate')}
-                          extra={'%'}
-                          defaultValue={0}
-                        />
-                      </Flex.Item>
-                      <Flex.Item>
-                        <InputItem
-                          {...getFieldProps('c_injury_rate')}
-                          extra={'%'}
-                          defaultValue={8}
-                        />
-                      </Flex.Item>
-                    </Flex>
-                  </Item>
-                  <Item>
-                    <Flex>
-                      <Flex.Item>生育保险金</Flex.Item>
-                      <Flex.Item>
-                        <InputItem
-                          {...getFieldProps('c_childbearing_rate')}
-                          extra={'%'}
-                          defaultValue={0}
-                        />
-                      </Flex.Item>
-                      <Flex.Item>
-                        <InputItem
-                          {...getFieldProps('c_childbearing_rate')}
-                          extra={'%'}
-                          defaultValue={8}
-                        />
-                      </Flex.Item>
-                    </Flex>
-                  </Item>
+                  {
+                    isCustomVisible && 
+                    <Custom />
+                  }
+                  
                 </div>
               }
               <Flex
