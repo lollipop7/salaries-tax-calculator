@@ -1,2 +1,1 @@
-
-const CITY_SELECT = 'CITY_SELECT';
+export const TAX_CALC = 'TAX_CALC';

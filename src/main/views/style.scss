@@ -142,27 +142,6 @@
 }
 
 .custom-percent {
-  .st-title {
-    margin: 20px 0 10px;
-    font-size: 14px;
-    text-align: center;
-    i{
-      margin-left: 10px;
-      display: inline-block;
-      border: 4px solid transparent;
-      border-top-color: $theme-color;
-      -webkit-transition: -webkit-transform .2s ease;
-      transition: -webkit-transform .2s ease;
-      transition: transform .2s ease;
-      transition: transform .2s ease,-webkit-transform .2s ease;
-    }
-    .arrow-up {
-      vertical-align: top;
-      -webkit-transform: rotate(180deg);
-      -ms-transform: rotate(180deg);
-      transform: rotate(180deg);
-    }
-  }
   
   .am-list-item .am-list-line .am-list-content {
     padding-top: 0;

@@ -5,14 +5,45 @@ import {Chart as PieChart} from './pie-chart';
 import {salaryPieOption} from '../optionConfig/salaryPieOptions.js';
 import {costPieOption} from '../optionConfig/costPieOptions.js';
 import './style.scss'; 
+
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import * as Actions from '../../Actions';
+
 const Item = List.Item;
 const Brief = Item.Brief;
 
 
 
 class Calc extends Component {
+
+  constructor(props) {
+    super(props);
+    this.handlePersonItem = this.handlePersonItem.bind(this);
+    this.state = {
+      isPersonVisible: false
+    }
+  }
+
+  setStateAsync(state) {
+    return new Promise((resolve) => {
+      this.setState(state, resolve)
+    })
+  }
+
+  handlePersonItem() {
+    const { isPersonVisible } = this.state;
+    this.setStateAsync({isPersonVisible: !isPersonVisible})
+  }
   
   render (){
+    const {
+      isPersonVisible
+    } = this.state;
+    const {
+      represent_data
+    } = this.props;
+    console.log(represent_data)
     return (
       <div>
         <WhiteSpace size="lg"></WhiteSpace>
@@ -128,24 +159,110 @@ class Calc extends Component {
         <WhiteSpace size="lg"></WhiteSpace>
         <WingBlank size="lg">
           <div className="calc-list">
-            <List renderHeader={() => '个税缴纳明细'}>
+            <List>
+              <Item className="am-list-header">税后工资明细 <a href="javascript:void(0)"  className="st-title under-line">（3个抵扣项）</a></Item>
               <Item>
                 <Flex>
-                  <Flex.Item> 应税工资</Flex.Item>
-                  <Flex.Item>8250.00 <span className="st-title under-line">(0个抵扣项)</span></Flex.Item>
+                  <Flex.Item>月份</Flex.Item>
+                  <Flex.Item>个人所得税</Flex.Item>
+                  <Flex.Item>税后工资</Flex.Item>
                 </Flex>
               </Item>
               <Item>
                 <Flex>
-                  <Flex.Item> 个人所得税</Flex.Item><Flex.Item>115.00</Flex.Item>
+                  <Flex.Item> 一月</Flex.Item>
+                  <Flex.Item> </Flex.Item>
+                  <Flex.Item> </Flex.Item>
                 </Flex>
               </Item>
               <Item>
                 <Flex>
-                  <Flex.Item> 税后工资</Flex.Item>
-                  <Flex.Item><span className="st-title">8135.00</span></Flex.Item>
+                  <Flex.Item> 二月</Flex.Item>
+                  <Flex.Item> </Flex.Item>
+                  <Flex.Item> </Flex.Item>
                 </Flex>
               </Item>
+              <Item>
+                <Flex>
+                  <Flex.Item> 三月</Flex.Item>
+                  <Flex.Item> </Flex.Item>
+                  <Flex.Item> </Flex.Item>
+                </Flex>
+              </Item>
+              <Item>
+                <Flex>
+                  <Flex.Item> 四月</Flex.Item>
+                  <Flex.Item> </Flex.Item>
+                  <Flex.Item> </Flex.Item>
+                </Flex>
+              </Item>
+              <Item>
+                <Flex>
+                  <Flex.Item> 五月</Flex.Item>
+                  <Flex.Item> </Flex.Item>
+                  <Flex.Item> </Flex.Item>
+                </Flex>
+              </Item>
+              <Item>
+                <Flex>
+                  <Flex.Item> 六月</Flex.Item>
+                  <Flex.Item> </Flex.Item>
+                  <Flex.Item> </Flex.Item>
+                </Flex>
+              </Item>
+              {
+                isPersonVisible && 
+                  <div>
+                    <Item>
+                      <Flex>
+                        <Flex.Item> 七月</Flex.Item>
+                        <Flex.Item> </Flex.Item>
+                        <Flex.Item> </Flex.Item>
+                      </Flex>
+                    </Item>
+                    <Item>
+                      <Flex>
+                        <Flex.Item> 八月</Flex.Item>
+                        <Flex.Item> </Flex.Item>
+                        <Flex.Item> </Flex.Item>
+                      </Flex>
+                    </Item>
+                    <Item>
+                      <Flex>
+                        <Flex.Item> 九月</Flex.Item>
+                        <Flex.Item> </Flex.Item>
+                        <Flex.Item> </Flex.Item>
+                      </Flex>
+                    </Item>
+                    <Item>
+                      <Flex>
+                        <Flex.Item> 十月</Flex.Item>
+                        <Flex.Item> </Flex.Item>
+                        <Flex.Item> </Flex.Item>
+                      </Flex>
+                    </Item>
+                    <Item>
+                      <Flex>
+                        <Flex.Item> 十一月</Flex.Item>
+                        <Flex.Item> </Flex.Item>
+                        <Flex.Item> </Flex.Item>
+                      </Flex>
+                    </Item>
+                    <Item>
+                      <Flex>
+                        <Flex.Item> 十二月</Flex.Item>
+                        <Flex.Item> </Flex.Item>
+                        <Flex.Item> </Flex.Item>
+                      </Flex>
+                    </Item>
+                  </div>
+              }
+              <div className="display-list">
+                <div className="st-title" onClick={this.handlePersonItem}>
+                  {isPersonVisible ? '收起' : '显示全部'}
+                  <i className={`${isPersonVisible ? 'arrow-up' : ''}`}></i>
+                </div>
+              </div>
             </List>
           </div>
         </WingBlank>
@@ -177,4 +294,9 @@ class Calc extends Component {
   }
 }
 
-export default Calc;
+const mapStateToProps = state => ({
+  represent_data: state.Main.represent_data
+})
+
+
+export default connect(mapStateToProps, null)(Calc);
