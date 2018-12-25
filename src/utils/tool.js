@@ -1,5 +1,5 @@
 export function fomatFloat(src,pos){    
-  return Math.round(src)/Math.pow(10, pos);    
+  return Math.round(src * Math.pow(10, pos))/Math.pow(10, pos);    
 } 
 
 export function keepTwoDecimalFull(num) {

@@ -12,6 +12,26 @@
       padding: 0 20px 15px;
     }
   }
+  .am-list-item .am-input-control {
+    position: relative;
+    &:after {
+      content: '';
+      position: absolute;
+      background-color: #ddd;
+      display: block;
+      z-index: 1;
+      top: auto;
+      left: auto;
+      bottom: 0;
+      right: 0;
+      width: 80%;
+      height: 1PX; 
+      -webkit-transform-origin: 50% 100%;
+      transform-origin: 50% 100%;
+      -webkit-transform: scaleY(0.5);
+      transform: scaleY(0.5);
+    }
+  }
 }
 
 .rt-list-item.am-input-item {

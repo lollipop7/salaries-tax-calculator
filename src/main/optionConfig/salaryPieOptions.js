@@ -118,13 +118,13 @@ export const salaryPieOption = {
         }
       },
       data:[ //系列中的数据内容数组
-        {value: 81.4, name:'税后工资'},
-        {value: 8.0, name:'养老保险'},
-        {value: 2.0, name:'医疗保险'},
-        {value: 0.5, name:'失业保险'},
-        {value: 7.0, name:'住房公积金'},
-        {value: 0.0, name:'补充公积金'},
-        {value: 1.2, name:'个人所得税'},
+        {value: 0, name:'税后工资'},
+        {value: 0, name:'养老保险'},
+        {value: 0, name:'医疗保险'},
+        {value: 0, name:'失业保险'},
+        {value: 0, name:'住房公积金'},
+        {value: 0, name:'补充公积金'},
+        {value: 0, name:'个人所得税'},
       ]
     }
   ]

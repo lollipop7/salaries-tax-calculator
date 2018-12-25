@@ -83,13 +83,13 @@ export const costPieOption = {
         }
       },
       data:[ //系列中的数据内容数组
-        {value: 14.5, name:'养老保险（企业）'},
-        {value: 6.9, name:'医疗保险（企业）'},
-        {value: 0.4, name:'失业保险（企业）'},
-        {value: 0.1, name:'工伤保险（企业）'},
-        {value: 0.7, name:'生育保险（企业）'},
-        {value: 5.1, name:'住房公积金（企业）'},
-        {value: 0.0, name:'补充公积金（企业）'},
+        {value: 0, name:'养老保险（企业）'},
+        {value: 0, name:'医疗保险（企业）'},
+        {value: 0, name:'失业保险（企业）'},
+        {value: 0, name:'工伤保险（企业）'},
+        {value: 0, name:'生育保险（企业）'},
+        {value: 0, name:'住房公积金（企业）'},
+        {value: 0, name:'补充公积金（企业）'},
       ]
     }
   ]

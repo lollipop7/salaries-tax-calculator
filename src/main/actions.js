@@ -12,6 +12,7 @@ export const taxCalc = (data) => (dispatch, getState) => {
     data: data
   })
   .then(res=>{
-    dispatch({...TAX_CALC, payload: res.d});
+    dispatch({...TAX_CALC, payload: res});
   })
 }
+

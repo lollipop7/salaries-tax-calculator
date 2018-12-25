@@ -1,16 +1,17 @@
 import React, {Component} from 'react';
-import { Flex, List, InputItem } from 'antd-mobile';
+import { Flex, List } from 'antd-mobile';
 import {createForm} from 'rc-form';
 import {fomatFloat} from '../../utils/tool';
-
-import merge from 'lodash/merge';
+import InputBlock from './input-block';
 
 const Item = List.Item;
+
 
 class Custom extends Component {
   constructor(props) {
     super(props);
     this.handleResetData = this.handleResetData.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     // this.state = {
     //   p_pension_rate: 8,  //社保缴费比例（个人）
     //   p_medical_rate: 2,  //医保缴费比例（个人）
@@ -27,10 +28,14 @@ class Custom extends Component {
     // }
   }
 
+  setStateAsync(state) {
+    return new Promise((resolve) => {
+      this.setState(state, resolve)
+    })
+  }
 
   handleResetData(){
-    console.log(this.props)
-    this.props.form.resetFields()
+    console.log(this.props.form)
   }
 
   handleChange(field, v){
@@ -42,7 +47,7 @@ class Custom extends Component {
 
   render() {
     const { getFieldProps } = this.props.form;
-    const {rate_item = {}} = this.props;
+    const {rate_item} = this.props;
     const {
       p_pension_rate,
       c_pension_rate,
@@ -69,21 +74,19 @@ class Custom extends Component {
           <Flex>
             <Flex.Item>养老保险金</Flex.Item>
             <Flex.Item>
-              <InputItem
-                {...getFieldProps('p_pension_rate', {
-                  initialValue: p_pension_rate
-                })}
-                extra={'%'}
-                onChange={this.handleChange.bind(this, 'p_pension_rate')}
+              <InputBlock
+                itemname={'p_pension_rate'}
+                getFieldProps={getFieldProps}
+                value={p_pension_rate}
+                handleChange={this.handleChange}
               />
             </Flex.Item>
             <Flex.Item>
-              <InputItem
-                {...getFieldProps('c_pension_rate', {
-                  initialValue: c_pension_rate
-                })}
-                extra={'%'}
-                onChange={this.handleChange.bind(this, 'c_pension_rate')}
+              <InputBlock
+                itemname={'c_pension_rate'}
+                getFieldProps={getFieldProps}
+                value={c_pension_rate}
+                handleChange={this.handleChange}
               />
             </Flex.Item>
           </Flex>
@@ -92,21 +95,19 @@ class Custom extends Component {
           <Flex>
             <Flex.Item>医保保险金</Flex.Item>
             <Flex.Item>
-              <InputItem
-                {...getFieldProps('p_medical_rate', {
-                  initialValue: p_medical_rate
-                })}
-                extra={'%'}
-                onChange={this.handleChange.bind(this, 'p_medical_rate')}
+              <InputBlock
+                itemname={'p_medical_rate'}
+                getFieldProps={getFieldProps}
+                value={p_medical_rate}
+                handleChange={this.handleChange}
               />
             </Flex.Item>
             <Flex.Item>
-              <InputItem
-                {...getFieldProps('c_medical_rate', {
-                  initialValue: c_medical_rate
-                })}
-                extra={'%'}
-                onChange={this.handleChange.bind(this, 'c_medical_rate')}
+              <InputBlock
+                itemname={'c_medical_rate'}
+                getFieldProps={getFieldProps}
+                value={c_medical_rate}
+                handleChange={this.handleChange}
               />
             </Flex.Item>
           </Flex>
@@ -115,21 +116,19 @@ class Custom extends Component {
           <Flex>
             <Flex.Item>失业保险金</Flex.Item>
             <Flex.Item>
-              <InputItem
-                {...getFieldProps('p_unemployed_rate', {
-                  initialValue: p_unemployed_rate
-                })}
-                extra={'%'}
-                onChange={this.handleChange.bind(this, 'p_unemployed_rate')}
+              <InputBlock
+                itemname={'p_unemployed_rate'}
+                getFieldProps={getFieldProps}
+                value={p_unemployed_rate}
+                handleChange={this.handleChange}
               />
             </Flex.Item>
             <Flex.Item>
-              <InputItem
-                {...getFieldProps('c_unemployed_rate', {
-                  initialValue: c_unemployed_rate
-                })}
-                extra={'%'}
-                onChange={this.handleChange.bind(this, 'c_unemployed_rate')}
+              <InputBlock
+                itemname={'c_unemployed_rate'}
+                getFieldProps={getFieldProps}
+                value={c_unemployed_rate}
+                handleChange={this.handleChange}
               />
             </Flex.Item>
           </Flex>
@@ -138,21 +137,19 @@ class Custom extends Component {
           <Flex>
             <Flex.Item>住房公积金</Flex.Item>
             <Flex.Item>
-              <InputItem
-                {...getFieldProps('housingFund_rate', {
-                  initialValue: housingFund_rate
-                })}
-                extra={'%'}
-                onChange={this.handleChange.bind(this, 'housingFund_rate')}
+              <InputBlock
+                itemname={'housingFund_rate'}
+                getFieldProps={getFieldProps}
+                value={housingFund_rate}
+                handleChange={this.handleChange}
               />
             </Flex.Item>
             <Flex.Item>
-              <InputItem
-                {...getFieldProps('housingFund_rate', {
-                  initialValue: housingFund_rate
-                })}
-                extra={'%'}
-                onChange={this.handleChange.bind(this, 'housingFund_rate')}
+              <InputBlock
+                itemname={'housingFund_rate'}
+                getFieldProps={getFieldProps}
+                value={housingFund_rate}
+                handleChange={this.handleChange}
               />
             </Flex.Item>
           </Flex>
@@ -161,21 +158,20 @@ class Custom extends Component {
           <Flex>
             <Flex.Item>补充公积金</Flex.Item>
             <Flex.Item>
-              <InputItem
-                {...getFieldProps('housingFundAddition_rate', {
-                  initialValue: housingFundAddition_rate
-                })}
-                extra={'%'}
-                onChange={this.handleChange.bind(this, 'housingFundAddition_rate')}
+              <InputBlock
+                itemname={'housingFundAddition_rate'}
+                getFieldProps={getFieldProps}
+                value={0}
+                isEditable={false}
+                handleChange={this.handleChange}
               />
             </Flex.Item>
             <Flex.Item>
-              <InputItem
-                {...getFieldProps('housingFundAddition_rate', {
-                  initialValue: housingFundAddition_rate
-                })}
-                extra={'%'}
-                onChange={this.handleChange.bind(this, 'housingFundAddition_rate')}
+              <InputBlock
+                itemname={'housingFundAddition_rate'}
+                getFieldProps={getFieldProps}
+                value={housingFundAddition_rate}
+                handleChange={this.handleChange}
               />
             </Flex.Item>
           </Flex>
@@ -184,21 +180,20 @@ class Custom extends Component {
           <Flex>
             <Flex.Item>工伤保险金</Flex.Item>
             <Flex.Item>
-              <InputItem
-                {...getFieldProps('p_injury_rate', {
-                  initialValue: p_injury_rate
-                })}
-                extra={'%'}
-                onChange={this.handleChange.bind(this, 'p_injury_rate')}
+              <InputBlock
+                itemname={'p_injury_rate'}
+                getFieldProps={getFieldProps}
+                value={0}
+                isEditable={false}
+                handleChange={this.handleChange}
               />
             </Flex.Item>
             <Flex.Item>
-              <InputItem
-                {...getFieldProps('c_injury_rate', {
-                  initialValue: c_injury_rate
-                })}
-                extra={'%'}
-                onChange={this.handleChange.bind(this, 'c_injury_rate')}
+              <InputBlock
+                itemname={'c_injury_rate'}
+                getFieldProps={getFieldProps}
+                value={c_injury_rate}
+                handleChange={this.handleChange}
               />
             </Flex.Item>
           </Flex>
@@ -207,21 +202,20 @@ class Custom extends Component {
           <Flex>
             <Flex.Item>生育保险金</Flex.Item>
             <Flex.Item>
-              <InputItem
-                {...getFieldProps('p_childbearing_rate', {
-                  initialValue: p_childbearing_rate
-                })}
-                extra={'%'}
-                onChange={this.handleChange.bind(this, 'p_childbearing_rate')}
+              <InputBlock
+                itemname={'p_childbearing_rate'}
+                getFieldProps={getFieldProps}
+                value={0}
+                isEditable={false}
+                handleChange={this.handleChange}
               />
             </Flex.Item>
             <Flex.Item>
-              <InputItem
-                {...getFieldProps('c_childbearing_rate', {
-                  initialValue: c_childbearing_rate
-                })}
-                extra={'%'}
-                onChange={this.handleChange.bind(this, 'c_childbearing_rate')}
+              <InputBlock
+                itemname={'c_childbearing_rate'}
+                getFieldProps={getFieldProps}
+                value={c_childbearing_rate}
+                handleChange={this.handleChange}
               />
             </Flex.Item>
           </Flex>
