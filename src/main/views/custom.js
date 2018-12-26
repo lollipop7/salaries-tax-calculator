@@ -12,20 +12,6 @@ class Custom extends Component {
     super(props);
     this.handleResetData = this.handleResetData.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    // this.state = {
-    //   p_pension_rate: 8,  //社保缴费比例（个人）
-    //   p_medical_rate: 2,  //医保缴费比例（个人）
-    //   p_unemployed_rate:  0.5,  //失业缴费比例（个人）
-    //   p_injury_rate: 0, //工伤缴费比例（个人）
-    //   p_childbearing_rate: 0, //生育缴费比例（个人）
-    //   c_pension_rate: 20, //社保缴费比例（单位）
-    //   c_medical_rate: 9.5,  //医保缴费比例（单位）
-    //   c_unemployed_rate: 0.5,   //失业缴费比例（单位）
-    //   c_injury_rate: 8, //工伤缴费比例（单位）
-    //   c_childbearing_rate: 8, //生育缴费比例（单位）
-    //   housingFund_rate: 7,  //公积金缴费比例
-    //   housingFundAddition_rate: 0,  //汇缴补充公积金比例
-    // }
   }
 
   setStateAsync(state) {

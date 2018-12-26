@@ -23,17 +23,27 @@ export  class Chart extends PureComponent {
   }
   
   componentDidMount() {
-    const {series=[]} = this.props;
+    const {series=[], legend=[], title} = this.props;
     this.initPie()
     this.chartInstance.setOption({
       series: [{
         data: series.data
-      }]
+      }],
+      legend: legend,
+      title: title
     })
   }
 
   componentDidUpdate() {
-    this.initPie()
+    const {series=[], legend=[], title} = this.props;
+    this.initPie();
+    this.chartInstance.setOption({
+      series: [{
+        data: series.data
+      }],
+      legend: legend,
+      title: title
+    })
   }
   
   render() {

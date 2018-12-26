@@ -21,3 +21,16 @@ export function keepTwoDecimalFull(num) {
   }
   return s_x;  
 }
+
+
+export function uniqueBy(arr, name) {
+  let hash = {};
+  let newArr =[];
+  newArr = arr.reduceRight(function(item, next) {
+      if(!hash[next.name]){
+        hash[next.name] = true && item.push(next);
+      }
+      return item
+  }, [])
+  return newArr;
+}

@@ -4,7 +4,6 @@ import {createForm} from 'rc-form';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as Actions from '../../Actions';
-import supplySelData from '../../data/supply-housing-fund';
 import './style.scss'; 
 import Custom from './custom';
 import Calc from './calc';
@@ -33,7 +32,7 @@ class Main extends Component {
     this.handleCalc = this.handleCalc.bind(this);
     this.handleUpdateCustom = this.handleUpdateCustom.bind(this);
     this.state = {
-      isCustomVisible: true,
+      isCustomVisible: false,
       calc_btn: '计算',
       calc_num: 1,
       supplyValue: ['8%'],
@@ -42,12 +41,12 @@ class Main extends Component {
       base_social_security: 4200.0,       //社保基数
       base_housingFund: 7000.0,           //公积金汇缴基数
       
-      children_edu: 1000.0,               //子女教育
-      old_support: 0.0,                   //赡养老人
-      continuing_edu: 0.0,                //继续教育
-      medical: 0.0,                       //大病医疗
-      housing_rent: 0.0,                  //住房租金
-      housing_loan: 0.0,                  //房贷利息
+      // children_edu: 1000.0,               //子女教育
+      // old_support: 0.0,                   //赡养老人
+      // continuing_edu: 0.0,                //继续教育
+      // medical: 0.0,                       //大病医疗
+      // housing_rent: 0.0,                  //住房租金
+      // housing_loan: 0.0,                  //房贷利息
       isSocialBaseCustom: false,
       isHousingFundCustom: false,
       //rate_item
@@ -88,25 +87,7 @@ class Main extends Component {
       tax_threshold,
       base_social_security,
       base_housingFund,
-      children_edu,
-      old_support,
-      continuing_edu,
-      medical,
-      housing_rent,
-      housing_loan,
       rate_item={}
-      // p_pension_rate,
-      // p_medical_rate,
-      // p_unemployed_rate,
-      // p_injury_rate,
-      // p_childbearing_rate,
-      // c_pension_rate,
-      // c_medical_rate,
-      // c_unemployed_rate,
-      // c_injury_rate,
-      // c_childbearing_rate,
-      // housingFund_rate,
-      // housingFundAddition_rate
     } = this.state;
     let {
       p_pension_rate,
@@ -122,6 +103,20 @@ class Main extends Component {
       p_childbearing_rate,
       c_childbearing_rate
     } = rate_item;
+
+    const {
+      deduction_item={},
+      deduction_num,
+    } = this.props;
+
+    let {
+      children_edu,
+      old_support,
+      continuing_edu,
+      medical,
+      housing_rent,
+      housing_loan,
+    } = deduction_item;
     const {
       cityname,
       taxCalc
@@ -210,10 +205,9 @@ class Main extends Component {
     } = this.state;
     const {
       isShowDiagram,
-      deduction_num
+      deduction_num,
+      deduction_item
     } = this.props;
-
-   
     return(
       <div>
         <NavBar
@@ -359,6 +353,7 @@ const mapStateToProps = state => ({
   represent_data: state.Main.represent_data,
   isShowDiagram: state.Main.isShowDiagram,
   deduction_num: state.Deduct.deduction_num,
+  deduction_item: state.Deduct.deduction_item,
 })
 
 const mapDispatchToProps = dispatch => ({

@@ -4,10 +4,10 @@ import echarts from 'echarts/lib/echarts';
 import {Chart as PieChart} from './pie-chart';
 import {salaryPieOption} from '../optionConfig/salaryPieOptions.js';
 import {costPieOption} from '../optionConfig/costPieOptions.js';
-import represent_data from '../../data/response.js';
+// import represent_data from '../../data/response.js';
 import './style.scss'; 
 
-import {bindActionCreators} from 'redux';
+import {bindActionCreators} from 'redux'; 
 import {connect} from 'react-redux';
 import * as Actions from '../../Actions';
 
@@ -39,11 +39,10 @@ class Calc extends Component {
     const {
       isPersonVisible
     } = this.state;
-    // const {
-    //   represent_data
-    // } = this.props;
-    // console.log(represent_data)
-    console.log(represent_data);
+    const {
+      represent_data,
+      deduction_num
+    } = this.props;
     const {
       person_wxyj_item = {},  //个人五险一金明细
       company_wxyj_item = {}, //企业五险一金明细
@@ -61,18 +60,6 @@ class Calc extends Component {
       pr_housingfund,   //住房公积金占比
       pr_housingfund_add,   //补充公积金占比
     } = person_income_item;
-    
-    const salarySeries = {
-      data: [
-        {value: pr_salary_after_tax, name:'税后工资'},
-        {value: pr_pension, name:'养老保险'},
-        {value: pr_medical, name:'医疗保险'},
-        {value: pr_unemployed, name:'失业保险'},
-        {value: pr_housingfund, name:'住房公积金'},
-        {value: pr_housingfund_add, name:'补充公积金'},
-        {value: salary_after_tax_avg / salary, name:'个人所得税'},
-      ]
-    };
     const {
       cr_salary,  //工资(个人)占比
       cr_pension,   //养老保险(企业)占比
@@ -82,11 +69,105 @@ class Calc extends Component {
       cr_childbearing,    //生育保险(企业)占比
       cr_housingfund,   //住房公积金(企业)占比
       cr_housingfund_add,   //补充公积金(企业)占比
+      total_cost
     } = company_cost_item;
+    
+    const salarySeries = {
+      data: [
+        {value: pr_salary_after_tax, name:'税后工资'},
+        {value: pr_pension, name:'养老保险'},
+        {value: pr_medical, name:'医疗保险'},
+        {value: pr_unemployed, name:'失业保险'},
+        {value: pr_housingfund, name:'住房公积金'},
+        {value: pr_housingfund_add, name:'补充公积金'},
+      ]
+    };
+    const arrLt = [`${pr_salary_after_tax}%`, `${pr_medical}%`, `${pr_housingfund}%`], //税后工资,医疗保险,住房公积金
+    arrRt = [`${pr_pension}%`, `${pr_unemployed}%`, `${pr_housingfund_add}%`]; //养老保险,失业保险,补充公积金
+    const salaryLegend = [
+      {
+        orient: 'vertical',
+        left: 20,
+        top: 210,
+        itemWidth: 14, //图例标记的图形宽度。
+        itemGap: 14, //图例每项之间的间隔。横向布局时为水平间隔，纵向布局时为纵向间隔。
+        tooltip: { // 提示框组件
+          show: true
+        },
+        data: [
+          {
+            name: '税后工资',
+            icon: 'roundRect'
+          },
+          {
+            name: '医疗保险',
+            icon: 'roundRect'
+          },
+          {
+            name: '住房公积金',
+            icon: 'roundRect'
+          }
+        ],
+        formatter: function(name){
+          let index = 0;
+          const data = ['税后工资', '医疗保险', '住房公积金']
+          data.forEach((item, i) => {
+            if(item === name) {
+              index = i;
+            }
+          })
+          return name + '  ' + arrLt[index];
+        }
+      },
+      {
+        orient: 'vertical',
+        left: 180,
+        top: 210,
+        itemWidth: 14, //图例标记的图形宽度。
+        itemGap: 14, //图例每项之间的间隔。横向布局时为水平间隔，纵向布局时为纵向间隔。
+        tooltip: { // 提示框组件
+          show: true
+        },
+        data: [
+          {
+            name: '养老保险',
+            icon: 'roundRect'
+          },
+          {
+            name: '失业保险',
+            icon: 'roundRect'
+          },
+          {
+            name: '补充公积金',
+            icon: 'roundRect'
+          },
+        ],
+        formatter: function(name){
+          let index = 0;
+          const data = ['养老保险', '失业保险', '补充公积金']
+          data.forEach((item, i) => {
+            if(item === name) {
+              index = i;
+            }
+          })
+          return name + '  ' + arrRt[index];
+        }
+      }
+    ]
+
+    const salaryTitle = {
+      text:`¥${salary}`,
+      left:'center',
+      top:'45%',
+      // padding:[24,0],
+      textStyle:{
+        color:'#031f2d',
+        align:'center'
+      }
+    }
 
     const costSeries = {
       data:[ //系列中的数据内容数组
-        {value: cr_salary, name:'养老保险（企业）'},
         {value: cr_pension, name:'养老保险（企业）'},
         {value: cr_medical, name:'医疗保险（企业）'},
         {value: cr_unemployed, name:'失业保险（企业）'},
@@ -94,7 +175,61 @@ class Calc extends Component {
         {value: cr_childbearing, name:'生育保险（企业）'},
         {value: cr_housingfund, name:'住房公积金（企业）'},
         {value: cr_housingfund_add, name:'补充公积金（企业）'},
+        {value: cr_salary, name:'工资(个人)'},
       ]
+    }
+    const dataList = [
+      `${cr_pension}%`,
+      `${cr_medical}%`,
+      `${cr_unemployed}%`,
+      `${cr_injury}%`,
+      `${cr_childbearing}%`,
+      `${cr_housingfund}%`,
+      `${cr_housingfund_add}%`,
+      `${cr_salary}%`
+    ]
+    const nameList = [
+      '养老保险（企业）', '医疗保险（企业）', '失业保险（企业）', '工伤保险（企业）', '生育保险（企业）', '住房公积金（企业）', '补充公积金（企业）','工资(个人)'
+    ];
+    const costLegend = [{
+      orient: 'horizontal',
+      top: 210,
+      left: 60,
+      itemWidth: 14, //图例标记的图形宽度。
+      itemGap: 14, //图例每项之间的间隔。横向布局时为水平间隔，纵向布局时为纵向间隔。
+      tooltip: { // 提示框组件
+        show: true
+      },
+      data: [
+        {name: '养老保险（企业）', icon: 'roundRect'},
+        {name: '医疗保险（企业）', icon: 'roundRect'},
+        {name: '失业保险（企业）', icon: 'roundRect'},
+        {name: '工伤保险（企业）', icon: 'roundRect'},
+        {name: '生育保险（企业）', icon: 'roundRect'},
+        {name: '住房公积金（企业）', icon: 'roundRect'},
+        {name: '补充公积金（企业）', icon: 'roundRect'},
+        {name: '工资(个人)', icon: 'roundRect'},
+      ],
+      formatter: function(name){
+        let index = 0;
+        nameList.forEach((item, i) => {
+          if(item === name) {
+            index = i;
+          }
+        })
+        return name + '：' + dataList[index];
+      }
+    }]
+
+    const costTitle = {
+      text:`¥${total_cost}`,
+      left:'center',
+      // top:'45%',
+      // padding:[24,0],
+      textStyle:{
+        color:'#031f2d',
+        align:'center'
+      }
     }
     return (
       <div>
@@ -218,7 +353,7 @@ class Calc extends Component {
         <WingBlank size="lg">
           <div className="calc-list">
             <List>
-              <Item className="am-list-header">税后工资明细 <a href="javascript:void(0)"  className="st-title under-line">（3个抵扣项）</a></Item>
+              <Item className="am-list-header">税后工资明细 <a href="javascript:void(0)"  className="st-title under-line">（{deduction_num}个抵扣项）</a></Item>
               <Item>
                 <Flex>
                   <Flex.Item>月份</Flex.Item>
@@ -332,7 +467,8 @@ class Calc extends Component {
               title="工资构成"
             />
             <Card.Body className='salary-pie'>
-              <PieChart option={salaryPieOption} series={salarySeries}></PieChart>
+              <div className="pie-title">{`¥${salary}`}</div>
+              <PieChart option={salaryPieOption} series={salarySeries} legend={salaryLegend} title={salaryTitle}></PieChart>
             </Card.Body>
           </Card>
         </WingBlank>
@@ -343,7 +479,8 @@ class Calc extends Component {
               title="企业用工成本构成"
             />
             <Card.Body className='cost-pie'>
-              <PieChart option={costPieOption} series={costSeries}></PieChart>
+              <div className="pie-title">{`¥${total_cost}`}</div>
+              <PieChart option={costPieOption} series={costSeries} legend={costLegend} title={costTitle}></PieChart>
             </Card.Body>
           </Card>
         </WingBlank>
@@ -353,7 +490,8 @@ class Calc extends Component {
 }
 
 const mapStateToProps = state => ({
-  represent_data: state.Main.represent_data
+  represent_data: state.Main.represent_data,
+  deduction_num: state.Deduct.deduction_num,
 })
 
 

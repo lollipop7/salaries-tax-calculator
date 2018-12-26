@@ -1,12 +1,6 @@
 // 企业用工成本构成
 /**
- * #5fc3be 税后工资（个人） 58.9%
- * #3f4549 养老保险（个人） 5.8%
- * #d1d969 医疗保险（个人） 1.4%
- * #fb9da2 失业保险（个人） 0.4%
- * #4799cd 住房公积金（个人） 5.1%
- * #ffe200 补充公积金（个人） 0.0%
- * #ffbb7c 个人所得税 0.8%
+ * #5fc3be 工资(个人)占比 
  * #2e9458 养老保险（企业） 14.5%
  * #ed58b0 医疗保险（企业） 6.9%
  * #b6e5c0 失业保险（企业） 0.4%
@@ -16,11 +10,32 @@
  * #d8d8d8 补充公积金（企业） 0.0%
  */
 
-const dataList = ['14.5%', '6.9%', '0.4%', '0.1%', '0.7%', '5.1%', '0.0%'],
-nameList = [
-  '养老保险（企业）', '医疗保险（企业）', '失业保险（企业）', '工伤保险（企业）', '生育保险（企业）', '住房公积金（企业）', '补充公积金（企业）'
-],
-cost = '¥13820';
+// import store from 'store';
+// const company_cost_item = store.get('company_cost_item');
+// const {
+//   cr_salary,  //工资(个人)占比
+//   cr_pension,   //养老保险(企业)占比
+//   cr_medical,   //医疗保险(企业)占比
+//   cr_unemployed,    //失业保险(企业)占比
+//   cr_injury,    //工伤保险(企业)占比
+//   cr_childbearing,    //生育保险(企业)占比
+//   cr_housingfund,   //住房公积金(企业)占比
+//   cr_housingfund_add,   //补充公积金(企业)占比
+// } = company_cost_item;
+// const dataList = [
+//   `${cr_pension}%`,
+//   `${cr_medical}%`,
+//   `${cr_unemployed}%`,
+//   `${cr_injury}%`,
+//   `${cr_childbearing}%`,
+//   `${cr_housingfund}%`,
+//   `${cr_housingfund_add}%`,
+//   `${cr_salary}%`
+// ]
+// const nameList = [
+//   '养老保险（企业）', '医疗保险（企业）', '失业保险（企业）', '工伤保险（企业）', '生育保险（企业）', '住房公积金（企业）', '补充公积金（企业）','工资(个人)'
+// ],
+// total_cost = store.get('total_cost');
 export const costPieOption = {
   tooltip: { // 提示框组件 
     trigger: 'item', // 触发类型
@@ -28,36 +43,37 @@ export const costPieOption = {
     confine: true // 是否将 tooltip 框限制在图表的区域内。
   },
   color: [
-    '#2e9458', '#ed58b0', '#b6e5c0', '#7962a7', '#ee4d4d', '#d8a068', '#d8d8d8'
+    '#2e9458', '#ed58b0', '#b6e5c0', '#7962a7', '#ee4d4d', '#d8a068', '#d8d8d8', '#5fc3be'
   ],
-  legend: {
-    orient: 'horizontal',
-    top: 210,
-    left: 60,
-    itemWidth: 14, //图例标记的图形宽度。
-    itemGap: 14, //图例每项之间的间隔。横向布局时为水平间隔，纵向布局时为纵向间隔。
-    tooltip: { // 提示框组件
-      show: true
-    },
-    data: [
-      {name: '养老保险（企业）', icon: 'roundRect'},
-      {name: '医疗保险（企业）', icon: 'roundRect'},
-      {name: '失业保险（企业）', icon: 'roundRect'},
-      {name: '工伤保险（企业）', icon: 'roundRect'},
-      {name: '生育保险（企业）', icon: 'roundRect'},
-      {name: '住房公积金（企业）', icon: 'roundRect'},
-      {name: '补充公积金（企业）', icon: 'roundRect'},
-    ],
-    formatter: function(name){
-      let index = 0;
-      nameList.forEach((item, i) => {
-        if(item === name) {
-          index = i;
-        }
-      })
-      return name + '：' + dataList[index];
-    }
-  },
+  // legend: {
+  //   orient: 'horizontal',
+  //   top: 210,
+  //   left: 60,
+  //   itemWidth: 14, //图例标记的图形宽度。
+  //   itemGap: 14, //图例每项之间的间隔。横向布局时为水平间隔，纵向布局时为纵向间隔。
+  //   tooltip: { // 提示框组件
+  //     show: true
+  //   },
+  //   data: [
+  //     {name: '养老保险（企业）', icon: 'roundRect'},
+  //     {name: '医疗保险（企业）', icon: 'roundRect'},
+  //     {name: '失业保险（企业）', icon: 'roundRect'},
+  //     {name: '工伤保险（企业）', icon: 'roundRect'},
+  //     {name: '生育保险（企业）', icon: 'roundRect'},
+  //     {name: '住房公积金（企业）', icon: 'roundRect'},
+  //     {name: '补充公积金（企业）', icon: 'roundRect'},
+  //     {name: '工资(个人)', icon: 'roundRect'},
+  //   ],
+  //   formatter: function(name){
+  //     let index = 0;
+  //     nameList.forEach((item, i) => {
+  //       if(item === name) {
+  //         index = i;
+  //       }
+  //     })
+  //     return name + '：' + dataList[index];
+  //   }
+  // },
   series: [ //系列列表
     {
       name:'工资构成',
@@ -90,6 +106,7 @@ export const costPieOption = {
         {value: 0, name:'生育保险（企业）'},
         {value: 0, name:'住房公积金（企业）'},
         {value: 0, name:'补充公积金（企业）'},
+        {value: 0, name:'工资(个人)'},
       ]
     }
   ]

@@ -6,93 +6,97 @@
  * #fb9da2 失业保险 0.5%
  * #4799cd 住房公积金 7.0%
  * #ffe200 补充公积金 0.0%
- * #ffbb7c 个人所得税 1.2%
  */
-
-let arrLt = ['81.4%', '2.0%', '7.0%', '1.2%'],
-arrRt = ['8.0%', '0.5%', '0.0%'],
-salary = '¥10000';
+// import store from 'store';
+// const person_income_item = store.get('person_income_item');
+// const {
+//   pr_salary_after_tax,  //税后工资占比
+//   pr_pension,  //养老保险占比
+//   pr_medical,   //医疗保险占比
+//   pr_unemployed,  //失业保险占比
+//   pr_housingfund,   //住房公积金占比
+//   pr_housingfund_add,   //补充公积金占比
+// } = person_income_item;
+// let arrLt = [`${pr_salary_after_tax}%`, `${pr_medical}%`, `${pr_housingfund}%`], //税后工资,医疗保险,住房公积金
+// arrRt = [`${pr_pension}%`, `${pr_unemployed}%`, `${pr_housingfund_add}%`], //养老保险,失业保险,补充公积金
+// salary = store.get('salary');
 export const salaryPieOption = {
   tooltip: { // 提示框组件 
     trigger: 'item', // 触发类型
     formatter: "{b}: ({c}%)", // 提示框浮层内容格式器
     confine: true // 是否将 tooltip 框限制在图表的区域内。
   },
-  color: ['#5fc3be', '#3f4549', '#d1d969', '#fb9da2', '#4799cd', '#ffe200', '#ffbb7c'],
-  legend: [
-    {
-      orient: 'vertical',
-      left: 20,
-      top: 210,
-      itemWidth: 14, //图例标记的图形宽度。
-      itemGap: 14, //图例每项之间的间隔。横向布局时为水平间隔，纵向布局时为纵向间隔。
-      tooltip: { // 提示框组件
-        show: true
-      },
-      data: [
-        {
-          name: '税后工资',
-          icon: 'roundRect'
-        },
-        {
-          name: '医疗保险',
-          icon: 'roundRect'
-        },
-        {
-          name: '住房公积金',
-          icon: 'roundRect'
-        },
-        {
-          name: '个人所得税',
-          icon: 'roundRect'
-        },
-      ],
-      formatter: function(name){
-        let index = 0;
-        const data = ['税后工资', '医疗保险', '住房公积金', '个人所得税']
-        data.forEach((item, i) => {
-          if(item === name) {
-            index = i;
-          }
-        })
-        return name + '  ' + arrLt[index];
-      }
-    },
-    {
-      orient: 'vertical',
-      left: 180,
-      top: 210,
-      itemWidth: 14, //图例标记的图形宽度。
-      itemGap: 14, //图例每项之间的间隔。横向布局时为水平间隔，纵向布局时为纵向间隔。
-      tooltip: { // 提示框组件
-        show: true
-      },
-      data: [
-        {
-          name: '养老保险',
-          icon: 'roundRect'
-        },
-        {
-          name: '失业保险',
-          icon: 'roundRect'
-        },
-        {
-          name: '补充公积金',
-          icon: 'roundRect'
-        },
-      ],
-      formatter: function(name){
-        let index = 0;
-        const data = ['养老保险', '失业保险', '补充公积金']
-        data.forEach((item, i) => {
-          if(item === name) {
-            index = i;
-          }
-        })
-        return name + '  ' + arrRt[index];
-      }
-    }
-  ],
+  color: ['#5fc3be', '#3f4549', '#d1d969', '#fb9da2', '#4799cd', '#ffe200'],
+  // legend: [
+  //   {
+  //     orient: 'vertical',
+  //     left: 20,
+  //     top: 210,
+  //     itemWidth: 14, //图例标记的图形宽度。
+  //     itemGap: 14, //图例每项之间的间隔。横向布局时为水平间隔，纵向布局时为纵向间隔。
+  //     tooltip: { // 提示框组件
+  //       show: true
+  //     },
+  //     data: [
+  //       {
+  //         name: '税后工资',
+  //         icon: 'roundRect'
+  //       },
+  //       {
+  //         name: '医疗保险',
+  //         icon: 'roundRect'
+  //       },
+  //       {
+  //         name: '住房公积金',
+  //         icon: 'roundRect'
+  //       }
+  //     ],
+  //     formatter: function(name){
+  //       let index = 0;
+  //       const data = ['税后工资', '医疗保险', '住房公积金']
+  //       data.forEach((item, i) => {
+  //         if(item === name) {
+  //           index = i;
+  //         }
+  //       })
+  //       return name + '  ' + arrLt[index];
+  //     }
+  //   },
+  //   {
+  //     orient: 'vertical',
+  //     left: 180,
+  //     top: 210,
+  //     itemWidth: 14, //图例标记的图形宽度。
+  //     itemGap: 14, //图例每项之间的间隔。横向布局时为水平间隔，纵向布局时为纵向间隔。
+  //     tooltip: { // 提示框组件
+  //       show: true
+  //     },
+  //     data: [
+  //       {
+  //         name: '养老保险',
+  //         icon: 'roundRect'
+  //       },
+  //       {
+  //         name: '失业保险',
+  //         icon: 'roundRect'
+  //       },
+  //       {
+  //         name: '补充公积金',
+  //         icon: 'roundRect'
+  //       },
+  //     ],
+  //     formatter: function(name){
+  //       let index = 0;
+  //       const data = ['养老保险', '失业保险', '补充公积金']
+  //       data.forEach((item, i) => {
+  //         if(item === name) {
+  //           index = i;
+  //         }
+  //       })
+  //       return name + '  ' + arrRt[index];
+  //     }
+  //   }
+  // ],
   series: [ //系列列表
     {
       name:'工资构成',
@@ -124,7 +128,6 @@ export const salaryPieOption = {
         {value: 0, name:'失业保险'},
         {value: 0, name:'住房公积金'},
         {value: 0, name:'补充公积金'},
-        {value: 0, name:'个人所得税'},
       ]
     }
   ]

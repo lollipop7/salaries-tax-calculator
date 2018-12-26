@@ -13,6 +13,6 @@ export const hideDeduct = () => (dispatch) => {
   dispatch(HIDE_DEDUCT)
 }
 
-export const addDeductNum = (data, num) => (dispatch, getState) => {
-  dispatch({...ADD_DEDUCT, payload: data, num: num})
+export const addDeductNum = (obj, num) => (dispatch, getState) => {
+  dispatch({...ADD_DEDUCT, payload: obj, num: num})
 }
