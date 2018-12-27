@@ -1,7 +1,8 @@
 import {
   SHOW_DEDUCT, 
   HIDE_DEDUCT,
-  ADD_DEDUCT
+  ADD_DEDUCT,
+  CHECKED_DEDUCT
 } from './actionTypes';
 
 const initState = {
@@ -14,7 +15,8 @@ const initState = {
     housing_loan: 0.0,
     medical: 0.0
   },
-  deduction_num: 0
+  deduction_num: 0,
+  checked_deduct: []
 }
 
 export default (state=initState, actions) => {
@@ -25,6 +27,8 @@ export default (state=initState, actions) => {
       return {...state, isVisible: false};
     case ADD_DEDUCT:
       return {...state, deduction_item: actions.payload, deduction_num: actions.num };
+    case CHECKED_DEDUCT:
+      return {...state, checked_deduct: actions.payload };
     default:
       return state;
   }

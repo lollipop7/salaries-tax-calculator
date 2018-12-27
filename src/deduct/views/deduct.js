@@ -9,7 +9,6 @@ import continuingEduData from '../../data/continuing-edu.js';
 import housingRentData from '../../data/housing_rent.js';
 import unionBy from 'lodash/unionBy';
 import {uniqueBy} from '../../utils/tool';
-import './style.scss';
 
 const CheckboxItem = Checkbox.CheckboxItem;
 const isIPhone = new RegExp('\\biPhone\\b|\\biPod\\b', 'i').test(window.navigator.userAgent);
@@ -42,17 +41,17 @@ class DeductComponent extends Component {
       housing_rent: 800,
       housing_loan: 1000,
       medical: 0,
-      childrenEduArr: [2000, 0.5],
+      childrenEduArr: [1000, 1],
       childrenEduValue: 500,
       continuingEduArr: [400],
       hasOldSupportInputError: false,
-      housingRentArr: [800],
+      housingRentArr: [1200],
       deduction_item: {
         children_edu: 0.0,
         old_support: 0.0,
         continuing_edu: 0.0,
         housing_rent: 0.0,
-        housing_loan: 0.0,
+        housing_loan: 1000,
         medical: 0.0
       }
     };
@@ -236,13 +235,39 @@ class DeductComponent extends Component {
     } = this.state;
 
     const {
-      addDeductNum
+      addDeductNum,
+      editCheckedDeduct,
+      hideDeduct
     } = this.props;
 
     if (isHousingRent && isHousingLoan) {
       Toast.info('请选择住房租金或住房贷款其中一项！');
       return false;
     }
+
+    let checked_deduct = [
+      {
+        checked: isChildrenEdu,
+        value: `子女教育: ${deduction_item.children_edu}`
+      },
+      {
+        checked: isOldSupport,
+        value: `赡养老人: ${deduction_item.old_support}`
+      },
+      {
+        checked: isContinuingEdu,
+        value: `继续教育: ${deduction_item.continuing_edu}`
+      },
+      {
+        checked: isHousingRent,
+        value: `住房租金: ${deduction_item.housing_rent}`
+      },
+      {
+        checked: isHousingLoan,
+        value: `房贷利息: ${deduction_item.housing_loan}`
+      }
+    ]
+
     new Promise((resolve)=>{
       let arr = [];
       arr.push(isChildrenEdu,
@@ -264,7 +289,12 @@ class DeductComponent extends Component {
       addDeductNum(
         deduction_item,
         deduction_num)
-    }).then(this.props.hideDeduct)
+    }).then(
+      ()=>{
+        editCheckedDeduct(checked_deduct);
+        hideDeduct();
+      }
+    )
   }
 
   render() {
@@ -285,7 +315,6 @@ class DeductComponent extends Component {
       housingRentArr
     } = this.state;
     return (
-      <div>
       <Modal
           visible={this.props.isVisible}
           closable={true}
@@ -417,7 +446,6 @@ class DeductComponent extends Component {
             >确定</Button>
           </div>
         </Modal>
-      </div>
     )
   }
 }
@@ -429,6 +457,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   hideDeduct: bindActionCreators(Actions.Deduct.hideDeduct, dispatch),
   addDeductNum: bindActionCreators(Actions.Deduct.addDeductNum, dispatch),
+  editCheckedDeduct: bindActionCreators(Actions.Deduct.editCheckedDeduct, dispatch),
 })
 DeductComponent = createForm()(DeductComponent);
 export default connect(mapStateToProps, mapDispatchToProps)(DeductComponent); 

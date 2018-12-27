@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {List, WingBlank, WhiteSpace, Flex, Card} from 'antd-mobile';
+import {List, WingBlank, WhiteSpace, Flex, Card, Toast} from 'antd-mobile';
 import echarts from 'echarts/lib/echarts'; 
 import {Chart as PieChart} from './pie-chart';
+import CheckedDeduct from './checked-deduct';
 import {salaryPieOption} from '../optionConfig/salaryPieOptions.js';
 import {costPieOption} from '../optionConfig/costPieOptions.js';
 // import represent_data from '../../data/response.js';
@@ -19,6 +20,7 @@ class Calc extends Component {
   constructor(props) {
     super(props);
     this.handlePersonItem = this.handlePersonItem.bind(this);
+    this.showCheckedDeduct = this.showCheckedDeduct.bind(this)
     this.state = {
       isPersonVisible: false
     }
@@ -34,7 +36,15 @@ class Calc extends Component {
     const { isPersonVisible } = this.state;
     this.setStateAsync({isPersonVisible: !isPersonVisible})
   }
-  
+
+  showCheckedDeduct() {
+    if(this.props.deduction_num==0){
+      Toast.info('未选择附加项！');
+    }else{
+      this.props.showCheckedDeduct();
+    }
+  }
+   
   render (){
     const {
       isPersonVisible
@@ -52,13 +62,43 @@ class Calc extends Component {
       salary_after_tax_avg, //税后工资
       salary, //税前月薪
     } = represent_data;
+    const {
+      p_pension_rate,
+      p_medical_rate,
+      p_unemployed_rate,
+      p_housingfund_rate,
+      p_housingfund_add_rate,
+      p_injury_rate,
+      p_childbearing_rate,
+      p_pension,
+      p_medical,
+      p_unemployed,
+      p_housingfund,
+      p_housingfund_add,
+    } = person_wxyj_item;
+    const {
+      c_pension_rate,
+      c_medical_rate,
+      c_unemployed_rate,
+      c_injury_rate,
+      c_childbearing_rate,
+      c_housingfund_rate,
+      c_housingfund_add_rate,
+      c_pension,
+      c_medical,
+      c_unemployed,
+      c_housingfund,
+      c_housingfund_add,
+      c_injury,
+      c_childbearing
+    } = company_wxyj_item;
     const  {
       pr_salary_after_tax,  //税后工资占比
       pr_pension,  //养老保险占比
       pr_medical,   //医疗保险占比
       pr_unemployed,  //失业保险占比
       pr_housingfund,   //住房公积金占比
-      pr_housingfund_add,   //补充公积金占比
+      pr_housingfund_add,   //补充公积金占比    
     } = person_income_item;
     const {
       cr_salary,  //工资(个人)占比
@@ -69,21 +109,29 @@ class Calc extends Component {
       cr_childbearing,    //生育保险(企业)占比
       cr_housingfund,   //住房公积金(企业)占比
       cr_housingfund_add,   //补充公积金(企业)占比
-      total_cost
+      total_cost,
     } = company_cost_item;
     
     const salarySeries = {
       data: [
-        {value: pr_salary_after_tax, name:'税后工资'},
-        {value: pr_pension, name:'养老保险'},
-        {value: pr_medical, name:'医疗保险'},
-        {value: pr_unemployed, name:'失业保险'},
-        {value: pr_housingfund, name:'住房公积金'},
-        {value: pr_housingfund_add, name:'补充公积金'},
+        {value: (pr_salary_after_tax*100).toFixed(2), name:'税后工资'},
+        {value: (pr_pension*100).toFixed(2), name:'养老保险'},
+        {value: (pr_medical*100).toFixed(2), name:'医疗保险'},
+        {value: (pr_unemployed*100).toFixed(2), name:'失业保险'},
+        {value: (pr_housingfund*100).toFixed(2), name:'住房公积金'},
+        {value: (pr_housingfund_add*100).toFixed(2), name:'补充公积金'},
       ]
     };
-    const arrLt = [`${pr_salary_after_tax}%`, `${pr_medical}%`, `${pr_housingfund}%`], //税后工资,医疗保险,住房公积金
-    arrRt = [`${pr_pension}%`, `${pr_unemployed}%`, `${pr_housingfund_add}%`]; //养老保险,失业保险,补充公积金
+    const arrLt = [
+      salary_after_tax_avg, 
+      p_medical, 
+      p_housingfund
+    ], //税后工资,医疗保险,住房公积金
+    arrRt = [
+      p_pension, 
+      p_unemployed, 
+      p_housingfund_add
+    ]; //养老保险,失业保险,补充公积金
     const salaryLegend = [
       {
         orient: 'vertical',
@@ -168,25 +216,25 @@ class Calc extends Component {
 
     const costSeries = {
       data:[ //系列中的数据内容数组
-        {value: cr_pension, name:'养老保险（企业）'},
-        {value: cr_medical, name:'医疗保险（企业）'},
-        {value: cr_unemployed, name:'失业保险（企业）'},
-        {value: cr_injury, name:'工伤保险（企业）'},
-        {value: cr_childbearing, name:'生育保险（企业）'},
-        {value: cr_housingfund, name:'住房公积金（企业）'},
-        {value: cr_housingfund_add, name:'补充公积金（企业）'},
-        {value: cr_salary, name:'工资(个人)'},
+        {value: (cr_pension*100).toFixed(2), name:'养老保险（企业）'},
+        {value: (cr_medical*100).toFixed(2), name:'医疗保险（企业）'},
+        {value: (cr_unemployed*100).toFixed(2), name:'失业保险（企业）'},
+        {value: (cr_injury*100).toFixed(2), name:'工伤保险（企业）'},
+        {value: (cr_childbearing*100).toFixed(2), name:'生育保险（企业）'},
+        {value: (cr_housingfund*100).toFixed(2), name:'住房公积金（企业）'},
+        {value: (cr_housingfund_add*100).toFixed(2), name:'补充公积金（企业）'},
+        {value: (cr_salary*100).toFixed(2), name:'工资(个人)'},
       ]
     }
     const dataList = [
-      `${cr_pension}%`,
-      `${cr_medical}%`,
-      `${cr_unemployed}%`,
-      `${cr_injury}%`,
-      `${cr_childbearing}%`,
-      `${cr_housingfund}%`,
-      `${cr_housingfund_add}%`,
-      `${cr_salary}%`
+      c_pension,
+      c_medical,
+      c_unemployed,
+      c_injury,
+      c_childbearing,
+      c_housingfund,
+      c_housingfund_add,
+      salary
     ]
     const nameList = [
       '养老保险（企业）', '医疗保险（企业）', '失业保险（企业）', '工伤保险（企业）', '生育保险（企业）', '住房公积金（企业）', '补充公积金（企业）','工资(个人)'
@@ -231,6 +279,7 @@ class Calc extends Component {
         align:'center'
       }
     }
+
     return (
       <div>
         <WhiteSpace size="lg"></WhiteSpace>
@@ -247,11 +296,11 @@ class Calc extends Component {
                   <Flex.Item> 养老保险金</Flex.Item>
                   <Flex.Item>
                     <span>{person_wxyj_item.p_pension}</span>
-                    <span className="percent-item">({pr_pension}%)</span>
+                    <span className="percent-item">({(p_pension_rate*100).toFixed(2)}%)</span>
                   </Flex.Item>
                   <Flex.Item>
                     <span>{company_wxyj_item.c_pension}</span>
-                    <span className="percent-item">({cr_pension}%)</span>
+                    <span className="percent-item">({(c_pension_rate*100).toFixed(2)}%)</span>
                   </Flex.Item>
                 </Flex>
               </Item>
@@ -260,11 +309,11 @@ class Calc extends Component {
                   <Flex.Item> 医疗保险金</Flex.Item>
                   <Flex.Item>
                     <span>{person_wxyj_item.p_medical}</span>
-                    <span className="percent-item">({pr_medical}%)</span>
+                    <span className="percent-item">({(p_medical_rate*100).toFixed(2)}%)</span>
                   </Flex.Item>
                   <Flex.Item>
                     <span>{company_wxyj_item.c_medical}</span>
-                    <span className="percent-item">({cr_medical}%)</span>
+                    <span className="percent-item">({(c_medical_rate*100).toFixed(2)}%)</span>
                   </Flex.Item>
                 </Flex>
               </Item>
@@ -273,11 +322,11 @@ class Calc extends Component {
                   <Flex.Item> 失业保险金</Flex.Item>
                   <Flex.Item>
                     <span>{person_wxyj_item.p_unemployed}</span>
-                    <span className="percent-item">({pr_unemployed})</span>
+                    <span className="percent-item">({(p_unemployed_rate*100).toFixed(2)}%)</span>
                   </Flex.Item>
                   <Flex.Item>
                     <span>{company_wxyj_item.c_unemployed}</span>
-                    <span className="percent-item">({cr_unemployed}%)</span>
+                    <span className="percent-item">({(c_unemployed_rate*100).toFixed(2)}%)</span>
                   </Flex.Item>
                 </Flex>
               </Item>
@@ -286,11 +335,11 @@ class Calc extends Component {
                   <Flex.Item>住房公积金</Flex.Item>
                   <Flex.Item>
                     <span>{person_wxyj_item.p_housingfund}</span>
-                    <span className="percent-item">({pr_housingfund})</span>
+                    <span className="percent-item">({(p_housingfund_rate*100).toFixed(2)}%)</span>
                   </Flex.Item>
                   <Flex.Item>
                     <span>{company_wxyj_item.c_housingfund}</span>
-                    <span className="percent-item">({cr_housingfund}%)</span>
+                    <span className="percent-item">({(c_housingfund_rate*100).toFixed(2)}%)</span>
                   </Flex.Item>
                 </Flex>
               </Item>
@@ -299,11 +348,11 @@ class Calc extends Component {
                   <Flex.Item> 补充公积金</Flex.Item>
                   <Flex.Item>
                     <span>{person_wxyj_item.p_housingfund_add}</span>
-                    <span className="percent-item">({pr_housingfund_add})</span>
+                    <span className="percent-item">({(p_housingfund_add_rate*100).toFixed(2)}%)</span>
                   </Flex.Item>
                   <Flex.Item>
                     <span>{company_wxyj_item.c_housingfund_add}</span>
-                    <span className="percent-item">({cr_housingfund_add}%)</span>
+                    <span className="percent-item">({(c_housingfund_add_rate*100).toFixed(2)}%)</span>
                   </Flex.Item>
                 </Flex>
               </Item>
@@ -312,11 +361,11 @@ class Calc extends Component {
                   <Flex.Item> 工伤保险金</Flex.Item>
                   <Flex.Item>
                     <span>{person_wxyj_item.p_injury}</span>
-                    <span className="percent-item">(0%)</span>
+                    <span className="percent-item">({(p_injury_rate*100).toFixed(2)}%)</span>
                   </Flex.Item>
                   <Flex.Item>
                     <span>{company_wxyj_item.c_injury}</span>
-                    <span className="percent-item">({cr_injury}%)</span>
+                    <span className="percent-item">({(c_injury_rate*100).toFixed(2)}%)</span>
                   </Flex.Item>
                 </Flex>
               </Item>
@@ -325,11 +374,11 @@ class Calc extends Component {
                   <Flex.Item> 生育保险金</Flex.Item>
                   <Flex.Item>
                     <span>{person_wxyj_item.p_childbearing}</span>
-                    <span className="percent-item">(0%)</span>
+                    <span className="percent-item">({(p_childbearing_rate*100).toFixed(2)}%)</span>
                   </Flex.Item>
                   <Flex.Item>
                     <span>{company_wxyj_item.c_childbearing}</span>
-                    <span className="percent-item">({cr_childbearing}%)</span>
+                    <span className="percent-item">({(c_childbearing_rate*100).toFixed(2)}%)</span>
                   </Flex.Item>
                 </Flex>
               </Item>
@@ -353,7 +402,10 @@ class Calc extends Component {
         <WingBlank size="lg">
           <div className="calc-list">
             <List>
-              <Item className="am-list-header">税后工资明细 <a href="javascript:void(0)"  className="st-title under-line">（{deduction_num}个抵扣项）</a></Item>
+              <Item className="am-list-header">
+                税后工资明细 
+                <span className="st-title under-line" onClick={this.showCheckedDeduct}>（{deduction_num}个抵扣项）</span>
+              </Item>
               <Item>
                 <Flex>
                   <Flex.Item>月份</Flex.Item>
@@ -484,6 +536,7 @@ class Calc extends Component {
             </Card.Body>
           </Card>
         </WingBlank>
+        <CheckedDeduct />
       </div>
     )
   }
@@ -494,5 +547,9 @@ const mapStateToProps = state => ({
   deduction_num: state.Deduct.deduction_num,
 })
 
+const mapDispatchToProps = dispatch => ({
+  showCheckedDeduct: bindActionCreators(Actions.Main.showCheckedDeduct, dispatch),
+})
 
-export default connect(mapStateToProps, null)(Calc);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Calc);

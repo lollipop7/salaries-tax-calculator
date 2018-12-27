@@ -7,19 +7,7 @@
  * #4799cd 住房公积金 7.0%
  * #ffe200 补充公积金 0.0%
  */
-// import store from 'store';
-// const person_income_item = store.get('person_income_item');
-// const {
-//   pr_salary_after_tax,  //税后工资占比
-//   pr_pension,  //养老保险占比
-//   pr_medical,   //医疗保险占比
-//   pr_unemployed,  //失业保险占比
-//   pr_housingfund,   //住房公积金占比
-//   pr_housingfund_add,   //补充公积金占比
-// } = person_income_item;
-// let arrLt = [`${pr_salary_after_tax}%`, `${pr_medical}%`, `${pr_housingfund}%`], //税后工资,医疗保险,住房公积金
-// arrRt = [`${pr_pension}%`, `${pr_unemployed}%`, `${pr_housingfund_add}%`], //养老保险,失业保险,补充公积金
-// salary = store.get('salary');
+
 export const salaryPieOption = {
   tooltip: { // 提示框组件 
     trigger: 'item', // 触发类型

@@ -10,32 +10,6 @@
  * #d8d8d8 补充公积金（企业） 0.0%
  */
 
-// import store from 'store';
-// const company_cost_item = store.get('company_cost_item');
-// const {
-//   cr_salary,  //工资(个人)占比
-//   cr_pension,   //养老保险(企业)占比
-//   cr_medical,   //医疗保险(企业)占比
-//   cr_unemployed,    //失业保险(企业)占比
-//   cr_injury,    //工伤保险(企业)占比
-//   cr_childbearing,    //生育保险(企业)占比
-//   cr_housingfund,   //住房公积金(企业)占比
-//   cr_housingfund_add,   //补充公积金(企业)占比
-// } = company_cost_item;
-// const dataList = [
-//   `${cr_pension}%`,
-//   `${cr_medical}%`,
-//   `${cr_unemployed}%`,
-//   `${cr_injury}%`,
-//   `${cr_childbearing}%`,
-//   `${cr_housingfund}%`,
-//   `${cr_housingfund_add}%`,
-//   `${cr_salary}%`
-// ]
-// const nameList = [
-//   '养老保险（企业）', '医疗保险（企业）', '失业保险（企业）', '工伤保险（企业）', '生育保险（企业）', '住房公积金（企业）', '补充公积金（企业）','工资(个人)'
-// ],
-// total_cost = store.get('total_cost');
 export const costPieOption = {
   tooltip: { // 提示框组件 
     trigger: 'item', // 触发类型

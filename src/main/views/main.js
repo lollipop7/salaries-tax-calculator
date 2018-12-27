@@ -7,7 +7,7 @@ import * as Actions from '../../Actions';
 import './style.scss'; 
 import Custom from './custom';
 import Calc from './calc';
-import {keepTwoDecimalFull} from '../../utils/tool';
+import {keepTwoDecimalFull, formatDecimal} from '../../utils/tool';
 
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -31,6 +31,7 @@ class Main extends Component {
     this.handleCustomPercent = this.handleCustomPercent.bind(this);
     this.handleCalc = this.handleCalc.bind(this);
     this.handleUpdateCustom = this.handleUpdateCustom.bind(this);
+    this.calcRadix = this.calcRadix.bind(this);
     this.state = {
       isCustomVisible: false,
       calc_btn: '计算',
@@ -38,8 +39,8 @@ class Main extends Component {
       supplyValue: ['8%'],
       salary: 10000.00,                   //税前月薪
       tax_threshold: 5000.0,              //起征点
-      base_social_security: 4200.0,       //社保基数
-      base_housingFund: 7000.0,           //公积金汇缴基数
+      base_social_security: 10000.0,       //社保基数
+      base_housingFund: 10000.0,           //公积金汇缴基数
       
       // children_edu: 1000.0,               //子女教育
       // old_support: 0.0,                   //赡养老人
@@ -47,25 +48,70 @@ class Main extends Component {
       // medical: 0.0,                       //大病医疗
       // housing_rent: 0.0,                  //住房租金
       // housing_loan: 0.0,                  //房贷利息
-      isSocialBaseCustom: false,
-      isHousingFundCustom: false,
+      social_security_threshold: '',
+      base_housingFund_threshold: '',
       //rate_item
       rate_item : {
         p_pension_rate: 8,  //社保缴费比例（个人）
         p_medical_rate: 2,  //医保缴费比例（个人）
         p_unemployed_rate:  0.5,  //失业缴费比例（个人）
-        p_injury_rate: 0, //工伤缴费比例（个人）
-        p_childbearing_rate: 0, //生育缴费比例（个人）
+        p_injury_rate: "0", //工伤缴费比例（个人）
+        p_childbearing_rate: "0", //生育缴费比例（个人）
         c_pension_rate: 20, //社保缴费比例（单位）
         c_medical_rate: 9.5,  //医保缴费比例（单位）
         c_unemployed_rate: 0.5,   //失业缴费比例（单位）
-        c_injury_rate: 8, //工伤缴费比例（单位）
-        c_childbearing_rate: 8, //生育缴费比例（单位）
+        c_injury_rate: 0.2, //工伤缴费比例（单位）
+        c_childbearing_rate: 1, //生育缴费比例（单位）
         housingFund_rate: 7,  //公积金缴费比例
-        housingFundAddition_rate: 0,  //汇缴补充公积金比例
+        housingFundAddition_rate: "0",  //汇缴补充公积金比例
       }
       
     }
+  }
+
+  calcRadix() {
+    let {
+      salary,                   //税前月薪
+    } = this.state;
+    if(parseFloat(salary)<2300) {
+      this.setStateAsync({
+        base_social_security: 4279,
+        base_housingFund: 2300,
+        social_security_threshold: '下限',
+        base_housingFund_threshold: '下限'
+      })
+    }else if(parseFloat(salary)>=2300 && parseFloat(salary)<=4279) {
+      this.setStateAsync({
+        base_social_security: 4279,
+        base_housingFund: salary,
+        social_security_threshold: '下限',
+        base_housingFund_threshold: ''
+      })
+    }else if(parseFloat(salary)>4279 && parseFloat(salary)<=21400){
+      this.setStateAsync({
+        base_social_security: salary,
+        base_housingFund: salary,
+        social_security_threshold: '',
+        base_housingFund_threshold: ''
+      })
+    }else if(parseFloat(salary)>21400 && parseFloat(salary)<=23196){
+      this.setStateAsync({
+        base_social_security: salary,
+        base_housingFund: 21400,
+        social_security_threshold: '',
+        base_housingFund_threshold: '上限'
+      })
+    }else{
+      this.setStateAsync({
+        base_social_security: 23196,
+        base_housingFund: 21400,
+        social_security_threshold: '上限',
+        base_housingFund_threshold: '上限'
+      })
+    }
+  }
+  componentDidMount(){
+    this.calcRadix()
   }
 
   setStateAsync(state) {
@@ -136,18 +182,18 @@ class Main extends Component {
         "base_social_security": keepTwoDecimalFull(base_social_security),
         "base_housingFund": keepTwoDecimalFull(base_housingFund),
         "rate_item": {
-            "p_pension_rate": keepTwoDecimalFull(p_pension_rate/100),
-            "p_medical_rate": keepTwoDecimalFull(p_medical_rate/100),
-            "p_injury_rate": keepTwoDecimalFull(p_injury_rate/100),
-            "p_unemployed_rate": keepTwoDecimalFull(p_unemployed_rate/100),
-            "p_childbearing_rate": keepTwoDecimalFull(p_childbearing_rate/100),
-            "c_pension_rate": keepTwoDecimalFull(c_pension_rate/100),
-            "c_medical_rate": keepTwoDecimalFull(c_medical_rate/100),
-            "c_injury_rate": keepTwoDecimalFull(c_injury_rate/100),
-            "c_unemployed_rate": keepTwoDecimalFull(c_unemployed_rate/100),
-            "c_childbearing_rate": keepTwoDecimalFull(c_childbearing_rate/100),
-            "housingFund_rate": keepTwoDecimalFull(housingFund_rate/100),
-            "housingFundAddition_rate": keepTwoDecimalFull(housingFundAddition_rate/100)
+            "p_pension_rate": formatDecimal(p_pension_rate/100, 3),
+            "p_medical_rate": formatDecimal(p_medical_rate/100, 3),
+            "p_injury_rate": formatDecimal(p_injury_rate/100, 3),
+            "p_unemployed_rate": formatDecimal(p_unemployed_rate/100, 3),
+            "p_childbearing_rate": formatDecimal(p_childbearing_rate/100, 3),
+            "c_pension_rate": formatDecimal(c_pension_rate/100, 3),
+            "c_medical_rate": formatDecimal(c_medical_rate/100, 3),
+            "c_injury_rate": formatDecimal(c_injury_rate/100, 3),
+            "c_unemployed_rate": formatDecimal(c_unemployed_rate/100, 3),
+            "c_childbearing_rate": formatDecimal(c_childbearing_rate/100, 3),
+            "housingFund_rate": formatDecimal(housingFund_rate/100, 3),
+            "housingFundAddition_rate": formatDecimal(housingFundAddition_rate/100, 3)
         },
         "deduction_item": {
             "children_edu": keepTwoDecimalFull(children_edu),
@@ -167,15 +213,12 @@ class Main extends Component {
     })
   }
 
-  handleEdit(field, v) {
-    this.setStateAsync({
-      [field]: !v
-    })
-  }
-
   handleUpdateCustom(field, v) {
-    let rate_item = Object.assign({}, this.state.rate_item, {[field]: v})
-    
+    // let rate_item = Object.assign({}, this.state.rate_item, {[field]: v})
+    let {
+      rate_item
+    } = this.state;
+    rate_item[field] = v;
     this.setStateAsync({
       rate_item
     })
@@ -199,9 +242,9 @@ class Main extends Component {
       base_housingFund,
       isCustomVisible, 
       calc_btn,
-      isSocialBaseCustom,
-      isHousingFundCustom,
-      rate_item = {}
+      rate_item = {},
+      social_security_threshold,
+      base_housingFund_threshold,
     } = this.state;
     const {
       isShowDiagram,
@@ -238,12 +281,11 @@ class Main extends Component {
                 })}
                 className='mid-list-item'
                 type='money'
-                onVirtualKeyboardConfirm={v => console.log('onVirtualKeyboardConfirm:', v)}
+                onVirtualKeyboardConfirm={this.calcRadix}
                 clear
                 moneyKeyboardAlign="right"
                 moneyKeyboardWrapProps={moneyKeyboardWrapProps}
                 onChange={this.handleInput.bind(this, 'salary')}
-                ref={el => this.salaryRef = el}
               >¥</InputItem>
             </List>
             <List>
@@ -258,7 +300,7 @@ class Main extends Component {
           <div className="deduct-list custom-list">
             <List>
               <Item className='st-title'>
-                社保基数{!isSocialBaseCustom && '（下限）'}
+                社保基数{social_security_threshold && `(${social_security_threshold})`}
               </Item>
               <InputItem
                 className='mid-list-item'
@@ -268,25 +310,15 @@ class Main extends Component {
                 })}
                 type='money'
                 clear
-                editable={isSocialBaseCustom}
                 onChange={this.handleInput.bind(this, 'base_social_security')}
                 moneyKeyboardAlign="left"
                 moneyKeyboardWrapProps={moneyKeyboardWrapProps}
-                extra={
-                  <CheckboxItem 
-                    key="social_base" 
-                    className="rt-checkbox"
-                    onChange={this.handleEdit.bind(this, 'isSocialBaseCustom', isSocialBaseCustom)}
-                  >
-                    自定义
-                  </CheckboxItem>
-                }
               >
               </InputItem> 
             </List>
             <List>
               <Item className='st-title'>
-              公积金汇缴基数
+              公积金汇缴基数{base_housingFund_threshold && `(${base_housingFund_threshold})`}
               </Item>
               <InputItem
                 className='mid-list-item'
@@ -296,19 +328,10 @@ class Main extends Component {
                 })}
                 type='money'
                 clear
-                editable={isHousingFundCustom}
                 onChange={this.handleInput.bind(this, 'base_housingFund')}
                 moneyKeyboardAlign="left"
                 moneyKeyboardWrapProps={moneyKeyboardWrapProps}
-                extra={
-                  <CheckboxItem 
-                    key="housing_fund" 
-                    className="rt-checkbox"
-                    onChange={this.handleEdit.bind(this, 'isHousingFundCustom', isHousingFundCustom)}
-                  >
-                    自定义
-                  </CheckboxItem>
-              }
+                
               >
               </InputItem> 
             </List>

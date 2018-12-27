@@ -16,7 +16,6 @@ export default (state=initState, actions) => {
     case HIDE_REGIONS:
       return {...state, isVisible: false};
     case SET_AREA:
-      console.log(actions.cityname)
       return {...state, cityname: actions.cityname}
     default:
       return state;

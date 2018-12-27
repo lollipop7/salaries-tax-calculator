@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import { InputItem } from 'antd-mobile';
 
 const isIPhone = new RegExp('\\biPhone\\b|\\biPod\\b', 'i').test(window.navigator.userAgent);
@@ -11,10 +11,6 @@ if (isIPhone) {
 
 class InputBlock extends Component {
 
-  handleChange(field, v){
-    this.props.handleChange(field, v)
-  }
-
   normalizeFun = (v, prev) => {
     if (v && !/^(([1-9]\d*)|0)(\.\d{0,2}?)?$/.test(v)) {
       if (v === '.') {
@@ -25,26 +21,37 @@ class InputBlock extends Component {
     return v;
   }
 
+  handleChange(field, v) {
+    this.props.handleChange(field, v)
+  }
+
   render() {
     const {
       itemname,
-      getFieldProps,
-      value,
-      isEditable
+      getFieldDecorator,
+      setFieldsValue,
+      rate_item,
+      isEditable,
     } = this.props;
     return (
-      <InputItem
-          {...getFieldProps(itemname, {
+      <Fragment>
+        {
+          getFieldDecorator(itemname, {
+            initialValue: rate_item[itemname],
             normalize: this.normalizeFun,
-          })}
-          type='money'
-          extra={'%'}
-          value={value}
-          editable={isEditable}
-          onChange={this.handleChange.bind(this, itemname)}
-          moneyKeyboardAlign="left"
-          moneyKeyboardWrapProps={moneyKeyboardWrapProps}
-        />
+            trigger: 'onChange',
+          })(
+            <InputItem
+              type='money'
+              extra={'%'}
+              editable={isEditable}
+              onChange={this.handleChange.bind(this, itemname)}
+              moneyKeyboardAlign="left"
+              moneyKeyboardWrapProps={moneyKeyboardWrapProps}
+            />
+          )
+        }
+      </Fragment>
     )
   }
 }

@@ -17,13 +17,6 @@ class Regions extends Component {
     this.handleSetArea = this.handleSetArea.bind(this)
   }
 
-  compomentDidMount(){
-    console.log(this.props.isVisible)
-  }
-  componentWillUpdate(){
-    console.log(this.props.isVisible)
-  }
-
   handleSetArea(e){
     let cityname = e.target.dataset.cityName;
     this.props.setArea(cityname);

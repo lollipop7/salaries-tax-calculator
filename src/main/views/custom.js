@@ -6,11 +6,10 @@ import InputBlock from './input-block';
 
 const Item = List.Item;
 
-
 class Custom extends Component {
   constructor(props) {
     super(props);
-    this.handleResetData = this.handleResetData.bind(this);
+  this.handleResetData = this.handleResetData.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -21,7 +20,10 @@ class Custom extends Component {
   }
 
   handleResetData(){
-    console.log(this.props.form)
+    const {
+      resetFields
+    } = this.props.form;
+    resetFields()
   }
 
   handleChange(field, v){
@@ -32,23 +34,9 @@ class Custom extends Component {
   }
 
   render() {
-    const { getFieldProps } = this.props.form;
+    const { getFieldDecorator, setFieldsValue } = this.props.form;
     const {rate_item} = this.props;
-    const {
-      p_pension_rate,
-      c_pension_rate,
-      p_medical_rate,
-      c_medical_rate,
-      p_unemployed_rate,
-      c_unemployed_rate,
-      housingFund_rate,
-      housingFundAddition_rate,
-      p_injury_rate,
-      c_injury_rate,
-      p_childbearing_rate,
-      c_childbearing_rate
-    } = rate_item;
-   
+    
     return (
       <div>
         <Item className="custom-header">
@@ -61,17 +49,19 @@ class Custom extends Component {
             <Flex.Item>养老保险金</Flex.Item>
             <Flex.Item>
               <InputBlock
+                rate_item={rate_item}
                 itemname={'p_pension_rate'}
-                getFieldProps={getFieldProps}
-                value={p_pension_rate}
+                getFieldDecorator={getFieldDecorator}
+                setFieldsValue={setFieldsValue}
                 handleChange={this.handleChange}
               />
             </Flex.Item>
             <Flex.Item>
               <InputBlock
+                rate_item={rate_item}
                 itemname={'c_pension_rate'}
-                getFieldProps={getFieldProps}
-                value={c_pension_rate}
+                getFieldDecorator={getFieldDecorator}
+                setFieldsValue={setFieldsValue}
                 handleChange={this.handleChange}
               />
             </Flex.Item>
@@ -82,17 +72,19 @@ class Custom extends Component {
             <Flex.Item>医保保险金</Flex.Item>
             <Flex.Item>
               <InputBlock
+                rate_item={rate_item}
                 itemname={'p_medical_rate'}
-                getFieldProps={getFieldProps}
-                value={p_medical_rate}
+                getFieldDecorator={getFieldDecorator}
+                setFieldsValue={setFieldsValue}
                 handleChange={this.handleChange}
               />
             </Flex.Item>
             <Flex.Item>
               <InputBlock
+              rate_item={rate_item}Ï
                 itemname={'c_medical_rate'}
-                getFieldProps={getFieldProps}
-                value={c_medical_rate}
+                getFieldDecorator={getFieldDecorator}
+                setFieldsValue={setFieldsValue}
                 handleChange={this.handleChange}
               />
             </Flex.Item>
@@ -103,17 +95,19 @@ class Custom extends Component {
             <Flex.Item>失业保险金</Flex.Item>
             <Flex.Item>
               <InputBlock
+                rate_item={rate_item}
                 itemname={'p_unemployed_rate'}
-                getFieldProps={getFieldProps}
-                value={p_unemployed_rate}
+                getFieldDecorator={getFieldDecorator}
+                setFieldsValue={setFieldsValue}
                 handleChange={this.handleChange}
               />
             </Flex.Item>
             <Flex.Item>
               <InputBlock
+                rate_item={rate_item}
                 itemname={'c_unemployed_rate'}
-                getFieldProps={getFieldProps}
-                value={c_unemployed_rate}
+                getFieldDecorator={getFieldDecorator}
+                setFieldsValue={setFieldsValue}
                 handleChange={this.handleChange}
               />
             </Flex.Item>
@@ -124,17 +118,19 @@ class Custom extends Component {
             <Flex.Item>住房公积金</Flex.Item>
             <Flex.Item>
               <InputBlock
+                rate_item={rate_item}
                 itemname={'housingFund_rate'}
-                getFieldProps={getFieldProps}
-                value={housingFund_rate}
+                getFieldDecorator={getFieldDecorator}
+                setFieldsValue={setFieldsValue}
                 handleChange={this.handleChange}
               />
             </Flex.Item>
             <Flex.Item>
               <InputBlock
+                rate_item={rate_item}
                 itemname={'housingFund_rate'}
-                getFieldProps={getFieldProps}
-                value={housingFund_rate}
+                getFieldDecorator={getFieldDecorator}
+                setFieldsValue={setFieldsValue}
                 handleChange={this.handleChange}
               />
             </Flex.Item>
@@ -145,18 +141,19 @@ class Custom extends Component {
             <Flex.Item>补充公积金</Flex.Item>
             <Flex.Item>
               <InputBlock
+                rate_item={rate_item}
                 itemname={'housingFundAddition_rate'}
-                getFieldProps={getFieldProps}
-                value={0}
-                isEditable={false}
+                getFieldDecorator={getFieldDecorator}
+                setFieldsValue={setFieldsValue}
                 handleChange={this.handleChange}
               />
             </Flex.Item>
             <Flex.Item>
               <InputBlock
+                rate_item={rate_item}
                 itemname={'housingFundAddition_rate'}
-                getFieldProps={getFieldProps}
-                value={housingFundAddition_rate}
+                getFieldDecorator={getFieldDecorator}
+                setFieldsValue={setFieldsValue}
                 handleChange={this.handleChange}
               />
             </Flex.Item>
@@ -167,18 +164,20 @@ class Custom extends Component {
             <Flex.Item>工伤保险金</Flex.Item>
             <Flex.Item>
               <InputBlock
+                rate_item={rate_item}
                 itemname={'p_injury_rate'}
-                getFieldProps={getFieldProps}
-                value={0}
+                getFieldDecorator={getFieldDecorator}
+                setFieldsValue={setFieldsValue}
                 isEditable={false}
                 handleChange={this.handleChange}
               />
             </Flex.Item>
             <Flex.Item>
               <InputBlock
+                rate_item={rate_item}
                 itemname={'c_injury_rate'}
-                getFieldProps={getFieldProps}
-                value={c_injury_rate}
+                getFieldDecorator={getFieldDecorator}
+                setFieldsValue={setFieldsValue}
                 handleChange={this.handleChange}
               />
             </Flex.Item>
@@ -189,27 +188,29 @@ class Custom extends Component {
             <Flex.Item>生育保险金</Flex.Item>
             <Flex.Item>
               <InputBlock
+                rate_item={rate_item}
                 itemname={'p_childbearing_rate'}
-                getFieldProps={getFieldProps}
-                value={0}
+                getFieldDecorator={getFieldDecorator}
+                setFieldsValue={setFieldsValue}
                 isEditable={false}
                 handleChange={this.handleChange}
               />
             </Flex.Item>
             <Flex.Item>
               <InputBlock
+                rate_item={rate_item}
                 itemname={'c_childbearing_rate'}
-                getFieldProps={getFieldProps}
-                value={c_childbearing_rate}
+                getFieldDecorator={getFieldDecorator}
+                setFieldsValue={setFieldsValue}
                 handleChange={this.handleChange}
               />
             </Flex.Item>
           </Flex>
         </Item>
-        <Item className="reset-data">
+        {/* <Item className="reset-data">
           <div  onClick={this.handleResetData}
           >还原默认值</div>
-        </Item>
+        </Item> */}
       </div>
     )
   }
