@@ -284,6 +284,121 @@ class Calc extends Component {
       <div>
         <WhiteSpace size="lg"></WhiteSpace>
         <WingBlank size="lg">
+          <div className="calc-list">
+            <List>
+              <Item className="am-list-header">
+                税后工资明细 
+                <span className="st-title under-line" onClick={this.showCheckedDeduct}>（{deduction_num}个抵扣项）</span>
+              </Item>
+              <Item>
+                <Flex>
+                  <Flex.Item>月份</Flex.Item>
+                  <Flex.Item>个人所得税</Flex.Item>
+                  <Flex.Item>税后工资</Flex.Item>
+                </Flex>
+              </Item>
+              <Item>
+                <Flex>
+                  <Flex.Item> 一月</Flex.Item>
+                  <Flex.Item>{tax_list[0].tax}</Flex.Item>
+                  <Flex.Item>{tax_list[0].salary_after_tax}</Flex.Item>
+                </Flex>
+              </Item>
+              <Item>
+                <Flex>
+                  <Flex.Item> 二月</Flex.Item>
+                  <Flex.Item>{tax_list[1].tax}</Flex.Item>
+                  <Flex.Item>{tax_list[1].salary_after_tax}</Flex.Item>
+                </Flex>
+              </Item>
+              <Item>
+                <Flex>
+                  <Flex.Item> 三月</Flex.Item>
+                  <Flex.Item>{tax_list[2].tax}</Flex.Item>
+                  <Flex.Item>{tax_list[2].salary_after_tax}</Flex.Item>
+                </Flex>
+              </Item>
+              <Item>
+                <Flex>
+                  <Flex.Item> 四月</Flex.Item>
+                  <Flex.Item>{tax_list[3].tax}</Flex.Item>
+                  <Flex.Item>{tax_list[3].salary_after_tax}</Flex.Item>
+                </Flex>
+              </Item>
+              <Item>
+                <Flex>
+                  <Flex.Item> 五月</Flex.Item>
+                  <Flex.Item>{tax_list[4].tax}</Flex.Item>
+                  <Flex.Item>{tax_list[4].salary_after_tax}</Flex.Item>
+                </Flex>
+              </Item>
+              <Item>
+                <Flex>
+                  <Flex.Item> 六月</Flex.Item>
+                  <Flex.Item>{tax_list[5].tax}</Flex.Item>
+                  <Flex.Item>{tax_list[5].salary_after_tax}</Flex.Item>
+                </Flex>
+              </Item>
+              {
+                isPersonVisible && 
+                  <div>
+                    <Item>
+                      <Flex>
+                        <Flex.Item> 七月</Flex.Item>
+                        <Flex.Item>{tax_list[6].tax}</Flex.Item>
+                        <Flex.Item>{tax_list[6].salary_after_tax}</Flex.Item>
+                      </Flex>
+                    </Item>
+                    <Item>
+                      <Flex>
+                        <Flex.Item> 八月</Flex.Item>
+                        <Flex.Item>{tax_list[7].tax}</Flex.Item>
+                        <Flex.Item>{tax_list[7].salary_after_tax}</Flex.Item>
+                      </Flex>
+                    </Item>
+                    <Item>
+                      <Flex>
+                        <Flex.Item> 九月</Flex.Item>
+                        <Flex.Item>{tax_list[8].tax}</Flex.Item>
+                        <Flex.Item>{tax_list[8].salary_after_tax}</Flex.Item>
+                      </Flex>
+                    </Item>
+                    <Item>
+                      <Flex>
+                        <Flex.Item> 十月</Flex.Item>
+                        <Flex.Item>{tax_list[9].tax}</Flex.Item>
+                        <Flex.Item>{tax_list[9].salary_after_tax}</Flex.Item>
+                      </Flex>
+                    </Item>
+                    <Item>
+                      <Flex>
+                        <Flex.Item> 十一月</Flex.Item>
+                        <Flex.Item>{tax_list[10].tax}</Flex.Item>
+                        <Flex.Item>{tax_list[10].salary_after_tax}</Flex.Item>
+                      </Flex>
+                    </Item>
+                    <Item>
+                      <Flex>
+                        <Flex.Item> 十二月</Flex.Item>
+                        <Flex.Item>{tax_list[11].tax}</Flex.Item>
+                        <Flex.Item>{tax_list[11].salary_after_tax}</Flex.Item>
+                      </Flex>
+                    </Item>
+                  </div>
+              }
+              <div className="display-list">
+                <div className="st-title" onClick={this.handlePersonItem}>
+                  {isPersonVisible ? '收起' : '显示全部'}
+                  <i className={`${isPersonVisible ? 'arrow-up' : ''}`}></i>
+                </div>
+              </div>
+            </List>
+          </div>
+        </WingBlank>
+
+        <WhiteSpace size="lg"></WhiteSpace>
+        
+        <WingBlank size="lg">
           <div className='calc-list'>
             <List renderHeader={() => '五险一金汇缴明细'}>
               <Item>
@@ -397,121 +512,7 @@ class Calc extends Component {
             
           </div>
         </WingBlank>
-
-        <WhiteSpace size="lg"></WhiteSpace>
-        <WingBlank size="lg">
-          <div className="calc-list">
-            <List>
-              <Item className="am-list-header">
-                税后工资明细 
-                <span className="st-title under-line" onClick={this.showCheckedDeduct}>（{deduction_num}个抵扣项）</span>
-              </Item>
-              <Item>
-                <Flex>
-                  <Flex.Item>月份</Flex.Item>
-                  <Flex.Item>个人所得税</Flex.Item>
-                  <Flex.Item>税后工资</Flex.Item>
-                </Flex>
-              </Item>
-              <Item>
-                <Flex>
-                  <Flex.Item> 一月</Flex.Item>
-                  <Flex.Item>{tax_list[0].tax}</Flex.Item>
-                  <Flex.Item>{tax_list[0].salary_after_tax}</Flex.Item>
-                </Flex>
-              </Item>
-              <Item>
-                <Flex>
-                  <Flex.Item> 二月</Flex.Item>
-                  <Flex.Item>{tax_list[1].tax}</Flex.Item>
-                  <Flex.Item>{tax_list[1].salary_after_tax}</Flex.Item>
-                </Flex>
-              </Item>
-              <Item>
-                <Flex>
-                  <Flex.Item> 三月</Flex.Item>
-                  <Flex.Item>{tax_list[2].tax}</Flex.Item>
-                  <Flex.Item>{tax_list[2].salary_after_tax}</Flex.Item>
-                </Flex>
-              </Item>
-              <Item>
-                <Flex>
-                  <Flex.Item> 四月</Flex.Item>
-                  <Flex.Item>{tax_list[3].tax}</Flex.Item>
-                  <Flex.Item>{tax_list[3].salary_after_tax}</Flex.Item>
-                </Flex>
-              </Item>
-              <Item>
-                <Flex>
-                  <Flex.Item> 五月</Flex.Item>
-                  <Flex.Item>{tax_list[4].tax}</Flex.Item>
-                  <Flex.Item>{tax_list[4].salary_after_tax}</Flex.Item>
-                </Flex>
-              </Item>
-              <Item>
-                <Flex>
-                  <Flex.Item> 六月</Flex.Item>
-                  <Flex.Item>{tax_list[5].tax}</Flex.Item>
-                  <Flex.Item>{tax_list[5].salary_after_tax}</Flex.Item>
-                </Flex>
-              </Item>
-              {
-                isPersonVisible && 
-                  <div>
-                    <Item>
-                      <Flex>
-                        <Flex.Item> 七月</Flex.Item>
-                        <Flex.Item>{tax_list[6].tax}</Flex.Item>
-                        <Flex.Item>{tax_list[6].salary_after_tax}</Flex.Item>
-                      </Flex>
-                    </Item>
-                    <Item>
-                      <Flex>
-                        <Flex.Item> 八月</Flex.Item>
-                        <Flex.Item>{tax_list[7].tax}</Flex.Item>
-                        <Flex.Item>{tax_list[7].salary_after_tax}</Flex.Item>
-                      </Flex>
-                    </Item>
-                    <Item>
-                      <Flex>
-                        <Flex.Item> 九月</Flex.Item>
-                        <Flex.Item>{tax_list[8].tax}</Flex.Item>
-                        <Flex.Item>{tax_list[8].salary_after_tax}</Flex.Item>
-                      </Flex>
-                    </Item>
-                    <Item>
-                      <Flex>
-                        <Flex.Item> 十月</Flex.Item>
-                        <Flex.Item>{tax_list[9].tax}</Flex.Item>
-                        <Flex.Item>{tax_list[9].salary_after_tax}</Flex.Item>
-                      </Flex>
-                    </Item>
-                    <Item>
-                      <Flex>
-                        <Flex.Item> 十一月</Flex.Item>
-                        <Flex.Item>{tax_list[10].tax}</Flex.Item>
-                        <Flex.Item>{tax_list[10].salary_after_tax}</Flex.Item>
-                      </Flex>
-                    </Item>
-                    <Item>
-                      <Flex>
-                        <Flex.Item> 十二月</Flex.Item>
-                        <Flex.Item>{tax_list[11].tax}</Flex.Item>
-                        <Flex.Item>{tax_list[11].salary_after_tax}</Flex.Item>
-                      </Flex>
-                    </Item>
-                  </div>
-              }
-              <div className="display-list">
-                <div className="st-title" onClick={this.handlePersonItem}>
-                  {isPersonVisible ? '收起' : '显示全部'}
-                  <i className={`${isPersonVisible ? 'arrow-up' : ''}`}></i>
-                </div>
-              </div>
-            </List>
-          </div>
-        </WingBlank>
-
+        
         <WhiteSpace size="lg"></WhiteSpace>
         <WingBlank size="lg">
           <Card full={true}>

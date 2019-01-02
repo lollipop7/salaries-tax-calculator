@@ -222,6 +222,7 @@ class Main extends Component {
     this.setStateAsync({
       rate_item
     })
+    console.log(this.customRef)
   }
 
   normalizeFun = (v, prev) => {
@@ -252,12 +253,7 @@ class Main extends Component {
       deduction_item
     } = this.props;
     return(
-      <div>
-        <NavBar
-          className="nav-bar"
-          mode="light"
-          icon={<Icon type="left" />}
-        >薪税计算器</NavBar>
+      <div className="animated-router-forward-enter-done">
         <Flex justify="around">
           <p>51金融圈薪税计算器</p>
           <Flex className="city-name">
@@ -288,20 +284,9 @@ class Main extends Component {
                 onChange={this.handleInput.bind(this, 'salary')}
               >¥</InputItem>
             </List>
-            <List>
-              <Button 
-                className='calc-btn'
-                type="primary"  
-                inline
-                onClick={this.handleCalc}
-              >{calc_btn}</Button>  
-            </List>
           </Card>
           <div className="deduct-list custom-list">
             <List>
-              <Item className='st-title'>
-                社保基数{social_security_threshold && `(${social_security_threshold})`}
-              </Item>
               <InputItem
                 className='mid-list-item'
                 {...getFieldProps('base_social_security', {
@@ -311,15 +296,15 @@ class Main extends Component {
                 type='money'
                 clear
                 onChange={this.handleInput.bind(this, 'base_social_security')}
-                moneyKeyboardAlign="left"
+                moneyKeyboardAlign="right"
                 moneyKeyboardWrapProps={moneyKeyboardWrapProps}
               >
+              <span className="st-title">
+                社保基数{social_security_threshold && `(${social_security_threshold})`}
+              </span>
               </InputItem> 
             </List>
             <List>
-              <Item className='st-title'>
-              公积金汇缴基数{base_housingFund_threshold && `(${base_housingFund_threshold})`}
-              </Item>
               <InputItem
                 className='mid-list-item'
                 {...getFieldProps('base_social_security', {
@@ -331,8 +316,11 @@ class Main extends Component {
                 onChange={this.handleInput.bind(this, 'base_housingFund')}
                 moneyKeyboardAlign="left"
                 moneyKeyboardWrapProps={moneyKeyboardWrapProps}
-                
+                moneyKeyboardAlign="right"
               >
+              <span className="st-title">
+              公积金汇缴基数{base_housingFund_threshold && `(${base_housingFund_threshold})`}
+              </span>
               </InputItem> 
             </List>
             <List>
@@ -346,20 +334,31 @@ class Main extends Component {
                   <Custom 
                     rate_item = {rate_item}
                     handleUpdateCustom = {this.handleUpdateCustom}
+                    ref={el=>this.customRef=el}
                   />
                 }
                 
               </div>
               <Flex
-                direction="column"
+                justify="around"
                 className="add-deduct"
+                align="start"
               >
                 <Button 
-                  type="primary"
-                  inline={true}
-                  onClick={this.props.showDeduct}
-                >添加抵扣项&nbsp;+</Button>
-                <Flex.Item>已添加{deduction_num}个项目</Flex.Item>
+                  type="primary"  
+                  inline
+                  onClick={this.handleCalc}
+                >{calc_btn}</Button> 
+                <Flex
+                  direction="column"
+                >
+                  <Button 
+                    type="primary"
+                    inline={true}
+                    onClick={this.props.showDeduct}
+                  >添加抵扣项&nbsp;+</Button>
+                  <Flex.Item>已添加{deduction_num}个项目</Flex.Item>
+                </Flex>
               </Flex>
                 
             </List>

@@ -3,16 +3,24 @@ import React, {Component} from 'react';
 import {view as Main} from './main';
 import {view as Deduct} from './deduct';
 import {view as Regions} from './regions';
+import {pageInputScroll} from './utils/pageInputScroll'
 
 
-function SalaryTax() {
-  return (
-    <div>
-      <Main />
-      <Deduct />
-      <Regions />
-    </div>
-  )
+class SalaryTax extends Component {
+  componentDidMount(){
+    if(/Android/i.test(navigator.userAgent)){
+      pageInputScroll()
+    }
+  }
+  render() {
+    return (
+      <div>
+        <Main />
+        <Deduct />
+        <Regions />
+      </div>
+    )
+  }
 }
 
 export default SalaryTax;
