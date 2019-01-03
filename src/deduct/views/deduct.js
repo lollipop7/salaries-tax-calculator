@@ -38,14 +38,14 @@ class DeductComponent extends Component {
       children_edu: 1000,
       old_support: 2000,
       continuing_edu: 400,
-      housing_rent: 800,
+      housing_rent: 1500,
       housing_loan: 1000,
       medical: 0,
       childrenEduArr: [1000, 1],
       childrenEduValue: 500,
       continuingEduArr: [400],
       hasOldSupportInputError: false,
-      housingRentArr: [1200],
+      housingRentArr: [1500],
       deduction_item: {
         children_edu: 0.0,
         old_support: 0.0,
@@ -340,6 +340,7 @@ class DeductComponent extends Component {
                   className="lt-checkbox"
                   key="childrenEdu"
                   arrow="down"
+                  checked={isChildrenEdu}
                   onChange={this.handleEdit.bind(this, 'isChildrenEdu', isChildrenEdu)}
                 >
                   子女教育
@@ -371,6 +372,7 @@ class DeductComponent extends Component {
                 <CheckboxItem 
                   key="old_support"
                   onChange={this.handleOldSupportEdit.bind(this, 'isOldSupport', isOldSupport)}
+                  checked={isOldSupport}
                 >   
                   赡养老人
                 </CheckboxItem>
@@ -390,6 +392,7 @@ class DeductComponent extends Component {
                   key="continuingEdu"
                   arrow="down"
                   onChange={this.handleEdit.bind(this, 'isContinuingEdu', isContinuingEdu)}
+                  checked={isContinuingEdu}
                 >
                   继续教育
                 </CheckboxItem>
@@ -408,6 +411,7 @@ class DeductComponent extends Component {
                   key="continuingEdu"
                   arrow="down"
                   onChange={this.handleRadioEdit.bind(this, 'isHousingRent', isHousingRent)}
+                  checked={isHousingRent}
                 >
                   住房租金
                 </CheckboxItem>
@@ -421,6 +425,7 @@ class DeductComponent extends Component {
                 <CheckboxItem 
                   key="housing_loan"
                   onChange={this.handleRadioEdit.bind(this, 'isHousingLoan', isHousingLoan)}
+                  checked={isHousingLoan}
                 >   
                   房贷利息
                 </CheckboxItem>

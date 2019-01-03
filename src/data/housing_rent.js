@@ -4,11 +4,11 @@ module.exports = [
     value: 800
   },
   {
-    label: '1000元',
-    value: 1000
+    label: '1100元',
+    value: 1100
   },
   {
-    label: '1200元',
-    value: 1200
+    label: '1500元',
+    value: 1500
   }
 ]

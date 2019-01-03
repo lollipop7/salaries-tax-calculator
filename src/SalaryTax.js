@@ -14,7 +14,7 @@ class SalaryTax extends Component {
   }
   render() {
     return (
-      <div>
+      <div style={{overflow: "auto"}}>
         <Main />
         <Deduct />
         <Regions />
