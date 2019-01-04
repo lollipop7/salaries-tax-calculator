@@ -39,7 +39,7 @@ class DeductComponent extends Component {
       old_support: 2000,
       continuing_edu: 400,
       housing_rent: 1500,
-      housing_loan: 1000,
+      housing_loan: 0,
       medical: 0,
       childrenEduArr: [1000, 1],
       childrenEduValue: 500,
@@ -51,7 +51,7 @@ class DeductComponent extends Component {
         old_support: 0.0,
         continuing_edu: 0.0,
         housing_rent: 0.0,
-        housing_loan: 1000,
+        housing_loan: 0,
         medical: 0.0
       }
     };
@@ -88,10 +88,10 @@ class DeductComponent extends Component {
       if(isOldSupport) {
         deduction_item.old_support = old_support;
       }else{
-        // delete deduction_item.old_support
+        deduction_item.old_support = 0
       }
       console.log(deduction_item, old_support)
-      this.setState({deduction_item})
+      this.setStateAsync({deduction_item})
     })
   }
 
@@ -111,16 +111,27 @@ class DeductComponent extends Component {
       if (isHousingRent && isHousingLoan) {
         Toast.info('请选择住房租金或住房贷款其中一项！');
       }
-    })
-    if(field === 'isHousingLoan') {
-      if(this.state.isHousingLoan) {
-        deduction_item.housing_loan = housing_loan;
-      }else{
-        // delete deduction_item.housing_loan
+      if(field === 'isHousingLoan') {
+        if(isHousingLoan) {
+          this.setStateAsync({
+            housing_loan: 1000
+          }).then(()=>{
+            const {housing_loan} = this.state;
+            deduction_item.housing_loan = housing_loan;
+            console.log(housing_loan)
+          })
+        }else{
+          this.setStateAsync({
+            housing_loan: 0
+          }).then(()=>{
+            const {housing_loan} = this.state;
+            deduction_item.housing_loan = housing_loan;
+          })
+        }
+        console.log(deduction_item, housing_loan)      
+        this.setStateAsync({deduction_item})
       }
-      console.log(deduction_item, housing_loan)      
-      this.setState({deduction_item})
-    }
+    })
   }
 
   handleChildrenEdu(v) {
@@ -139,10 +150,10 @@ class DeductComponent extends Component {
       if(this.state.isChildrenEdu) {
         deduction_item.children_edu = children_edu;
       }else{
-        // delete deduction_item.children_edu
+        deduction_item.children_edu = 0;
       }
       console.log(deduction_item, children_edu)
-      this.setState({deduction_item})
+      this.setStateAsync({deduction_item})
     })
   }
 
@@ -161,10 +172,10 @@ class DeductComponent extends Component {
       if(isContinuingEdu) {
         deduction_item.continuing_edu = continuing_edu;
       }else{
-        // delete deduction_item.continuing_edu;
+        deduction_item.continuing_edu = 0;
       }
       console.log(deduction_item, continuing_edu)
-      this.setState({deduction_item})
+      this.setStateAsync({deduction_item})
     })
   }
 
@@ -183,10 +194,10 @@ class DeductComponent extends Component {
       if(isHousingRent) {
         deduction_item.housing_rent = housing_rent;
       }else{
-        // delete deduction_item.housing_rent;
+        deduction_item.housing_rent = 0;
       }
       console.log(deduction_item, housing_rent)
-      this.setState({deduction_item})
+      this.setStateAsync({deduction_item})
     })
   }
 
@@ -209,7 +220,7 @@ class DeductComponent extends Component {
         }
         
         console.log(deduction_item, old_support)
-        this.setState({deduction_item})
+        this.setStateAsync({deduction_item})
       })
     } else {
       this.setStateAsync({
@@ -419,7 +430,7 @@ class DeductComponent extends Component {
               <InputItem 
                 {...getFieldProps('housing_loan')}
                 className='rt-list-item'
-                value={housing_loan}
+                value={1000}
                 editable={false}
               >
                 <CheckboxItem 

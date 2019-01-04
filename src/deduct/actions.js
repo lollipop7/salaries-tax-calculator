@@ -19,5 +19,6 @@ export const addDeductNum = (obj, num) => (dispatch, getState) => {
 }
 
 export const editCheckedDeduct = (arr) => (dispatch, getState) => {
+  console.log(arr)
   dispatch({...CHECKED_DEDUCT, payload: arr});
 }
